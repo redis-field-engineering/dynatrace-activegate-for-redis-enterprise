@@ -1,0 +1,85 @@
+---
+
+- hosts: all
+  become: yes
+  become_user: root
+  become_method: sudo
+  gather_facts: yes
+  vars:
+    pkgs:
+      - htop
+      - iotop
+      - git
+      - chrony
+      - sysstat
+      - vim
+      - tmux
+      - tree
+      - tcpdump
+      - unzip
+      - libpcre3-dev
+      - libssl-dev
+      - perl
+      - make
+      - cmake
+      - automake
+      - m4
+      - peg
+      - libtool
+      - autoconf
+      - zlib1g-dev
+      - build-essential
+      - curl
+      - python3-pip
+      - debian-archive-keyring
+      - apt-transport-https
+
+  vars_files:
+    - vars/main.yml
+
+  pre_tasks:
+    - name: Update Apt Cache
+      apt:
+        update_cache: yes
+        cache_valid_time: 86400
+        force_apt_get: yes
+
+    - name: Ubuntu Packages
+      apt: >
+        pkg={{ pkgs }}
+        state=present
+
+
+  post_tasks:
+    - name: Get Python 3.6.6
+      unarchive:
+        src: https://www.python.org/ftp/python/3.6.6/Python-3.6.6.tgz
+        dest: /var/tmp/
+        remote_src: True
+    - name: Configure Python 3.6.6
+      command: "./configure"
+      args:
+        chdir: /var/tmp/Python-3.6.6
+        creates: /var/tmp/Python-3.6.6/Makefile
+    - name: Make Python 3.6.6
+      make:
+        chdir: /var/tmp/Python-3.6.6
+        target: install
+    - name: Get the Active Gate download
+      command: "wget -O Dynatrace-ActiveGate-Linux-x86-{{ active_gate_version }}.sh \"https://lcr60355.live.dynatrace.com/api/v1/deployment/installer/gateway/unix/latest?arch=x86&flavor=default\" --header=\"Authorization: Api-Token {{ dynatrace_token }}\" "
+      args:
+        chdir: /var/tmp/
+        creates: "/var/tmp/Dynatrace-ActiveGate-Linux-x86-{{ active_gate_version }}.sh"
+    - name: Setup ActiveGate
+      command: "/bin/sh Dynatrace-ActiveGate-Linux-x86-{{ active_gate_version }}.sh"
+      args:
+        chdir: /var/tmp/
+        creates: /opt/dynatrace/gateway/launcher/dynatracegateway
+    - name: Copy SDK whl
+      copy:
+        src: plugin_sdk-1.223.99.20210818.200012-py3-none-any.whl
+        dest: /var/tmp/plugin_sdk-1.223.99.20210818.200012-py3-none-any.whl
+    - name: Setup SDK
+      pip:
+        name: file:///var/tmp/plugin_sdk-1.223.99.20210818.200012-py3-none-any.whl
+        executable: /usr/local/bin/pip3

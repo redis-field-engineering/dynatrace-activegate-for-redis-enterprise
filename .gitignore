@@ -1,0 +1,4 @@
+plugin_deployment/*
+.vagrant/*
+ansible/vars/main.yml
+ansible/files/*.whl
