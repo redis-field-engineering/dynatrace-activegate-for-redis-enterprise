@@ -3,3 +3,4 @@ plugin_deployment/*
 ansible/vars/main.yml
 ansible/files/*.whl
 *.log
+devnote*.md
