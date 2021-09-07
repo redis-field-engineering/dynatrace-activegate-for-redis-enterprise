@@ -65,8 +65,18 @@
       make:
         chdir: /var/tmp/Python-3.6.6
         target: install
+    - name: Get the Agent
+      command: "wget -O Dynatrace-OneAgent-Linux-{{ one_agent_version }}.sh \"https://{{ dynatrace_host }}.live.dynatrace.com/api/v1/deployment/installer/agent/unix/default/latest?arch=x86&flavor=default\" --header=\"Authorization: Api-Token {{ dynatrace_token }}\" "
+      args:
+        chdir: /var/tmp/
+        creates: "/var/tmp/Dynatrace-OneAgent-Linux-{{ one_agent_version }}.sh"
+    - name: Setup Agent
+      command: "/bin/sh Dynatrace-OneAgent-Linux-{{ one_agent_version }}.sh"
+      args:
+        chdir: /var/tmp/
+        creates: /opt/dynatrace/oneagent
     - name: Get the Active Gate download
-      command: "wget -O Dynatrace-ActiveGate-Linux-x86-{{ active_gate_version }}.sh \"https://lcr60355.live.dynatrace.com/api/v1/deployment/installer/gateway/unix/latest?arch=x86&flavor=default\" --header=\"Authorization: Api-Token {{ dynatrace_token }}\" "
+      command: "wget -O Dynatrace-ActiveGate-Linux-x86-{{ active_gate_version }}.sh \"https://{{ dynatrace_host }}.live.dynatrace.com/api/v1/deployment/installer/gateway/unix/latest?arch=x86&flavor=default\" --header=\"Authorization: Api-Token {{ dynatrace_token }}\" "
       args:
         chdir: /var/tmp/
         creates: "/var/tmp/Dynatrace-ActiveGate-Linux-x86-{{ active_gate_version }}.sh"
