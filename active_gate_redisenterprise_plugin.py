@@ -34,17 +34,6 @@ class RemoteRedisEnterprisePlugin(RemoteBasePlugin):
         self.current_entries = 1
         self.archived_entries = 0
 
-    def query(self, **kwargs):
-        group = self.topology_builder.create_group(
-            identifier="RedisEnterprise",
-            group_name="ActiveGate RedisEnterprise Clusters"
-            )
-        cluster_name = self.get_cluster_name()
-        device = group.create_device(cluster_name, cluster_name)
-        re_license, re_shards = get_license()
-        device.absolute("redis_enterprise.license_days", re_license)
-        device.absolute("redis_enterprise.license_shards", re_shards)
-
     ###############################################################################################################
     def get_cluster_name(self):
         """ Pull cluster name from the API """
@@ -75,3 +64,17 @@ class RemoteRedisEnterprisePlugin(RemoteBasePlugin):
             logging.exception('HTTPS Fech Error: {} returns a {} status: {}'.format(url, r.status_code, r.content))
 
         return r.json()
+
+    ###############################################################################################################
+    # Query needs to go last!!
+
+    def query(self, **kwargs):
+        group = self.topology_builder.create_group(
+            identifier="RedisEnterprise",
+            group_name="ActiveGate RedisEnterprise Clusters"
+            )
+        cluster_name = self.get_cluster_name()
+        device = group.create_device(cluster_name, cluster_name)
+        re_license, re_shards = get_license()
+        device.absolute("redis_enterprise.license_days", re_license)
+        device.absolute("redis_enterprise.license_shards", re_shards)
