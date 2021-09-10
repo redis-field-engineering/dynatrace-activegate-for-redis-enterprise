@@ -75,6 +75,6 @@ class RemoteRedisEnterprisePlugin(RemoteBasePlugin):
             )
         cluster_name = self.get_cluster_name()
         device = group.create_device(cluster_name, cluster_name)
-        re_license, re_shards = get_license()
+        re_license, re_shards = self.get_license()
         device.absolute("redis_enterprise.license_days", re_license)
         device.absolute("redis_enterprise.license_shards", re_shards)
