@@ -1,6 +1,6 @@
 {
     "name": "custom.remote.python.redisenterprise",
-    "version": "0.1.3",
+    "version": "0.1.6",
     "productiveMinVersion": "1.000",
     "requiredAgentVersion": "1.000",
     "type": "python",
@@ -24,6 +24,15 @@
                 "key": "redis_enterprise.license_days",
                 "unit": "Count",
                 "displayname": "License Days Remaining",
+                "aggregation": "MIN",
+                "entity": "CUSTOM_DEVICE"
+            }
+        },
+        {
+            "timeseries": {
+                "key": "redis_enterprise.database_count",
+                "unit": "Count",
+                "displayname": "Number of Databases on the Cluster",
                 "aggregation": "MIN",
                 "entity": "CUSTOM_DEVICE"
             }
