@@ -69,7 +69,7 @@ class RemoteRedisEnterprisePlugin(RemoteBasePlugin):
     def get_bdb_stats(self, device, bdb_dict): 
         """ Collect Enterprise database related stats """
         gauges = [
-            'avg_latency', 'avg_latency_max', 'avg_other_latency', 'avg_read_latency', 'avg_write_latency',]
+            'avg_latency', 'avg_latency_max', 'avg_other_latency', 'avg_read_latency', 'avg_write_latency', 'conns']
         #    'conns', 'egress_bytes', 'evicted_objects', 'expired_objects', 'fork_cpu_system',
         #    'ingress_bytes', 'listener_acc_latency', 'main_thread_cpu_system', 'main_thread_cpu_system_max', 'memory_limit',
         #    'no_of_keys', 'other_req', 'read_hits', 'read_misses', 'read_req', 'shard_cpu_system',
@@ -88,12 +88,10 @@ class RemoteRedisEnterprisePlugin(RemoteBasePlugin):
 
         for i in stats:
             db_name = bdb_dict[int(i)].get("name")
-            self.logger.info('DTM: DB name = {}'.format(db_name))
             for j in stats[i].keys():
                 if j in gauges:
                     self.logger.info('DTM: stat redisenterprise.{} value is:{}'.format(j, float(stats[i][j])))
-                    foo = device.absolute('redisenterprise.{}'.format(j), float(stats[i][j]))
-                    self.logger.info('DTM: submit says: {}'.format(foo))
+                    device.absolute('redisenterprise.{}'.format(j), float(stats[i][j]))
 
 
 

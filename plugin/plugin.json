@@ -1,6 +1,6 @@
 {
     "name": "custom.remote.python.redisenterprise",
-    "version": "0.1.28",
+    "version": "0.1.31",
     "productiveMinVersion": "1.000",
     "requiredAgentVersion": "1.000",
     "type": "python",
@@ -19,6 +19,15 @@
     },
     "ui": {},
     "metrics": [
+        {
+            "timeseries": {
+                "key": "redis_enterprise.conns",
+                "unit": "Count",
+                "displayname": "Number of Database Connections",
+                "aggregation": "max",
+                "entity": "CUSTOM_DEVICE"
+            }
+        },
         {
             "timeseries": {
                 "key": "redis_enterprise.avg_latency",
