@@ -68,22 +68,34 @@ class RemoteRedisEnterprisePlugin(RemoteBasePlugin):
 
     def get_bdb_stats(self, device, bdb_dict): 
         """ Collect Enterprise database related stats """
-#        gauges = [
-#            'avg_latency', 'avg_latency_max', 'avg_other_latency', 'avg_read_latency', 'avg_write_latency',
-#            'conns', 'egress_bytes', 'evicted_objects', 'expired_objects', 'fork_cpu_system',
-#            'ingress_bytes', 'listener_acc_latency', 'main_thread_cpu_system', 'main_thread_cpu_system_max', 'memory_limit',
-#            'no_of_keys', 'other_req', 'read_hits', 'read_misses', 'read_req', 'shard_cpu_system',
-#            'shard_cpu_system_max', 'total_req', 'total_req_max', 'used_memory', 'write_hits', 'write_misses',
-#            'write_req', 'bigstore_objs_ram', 'bigstore_objs_flash', 'bigstore_io_reads', 'bigstore_io_writes',
-#            'bigstore_throughput', 'big_write_ram', 'big_write_flash', 'big_del_ram', 'big_del_flash',
-#        ]
+        gauges = [
+            'avg_latency', 'avg_latency_max', 'avg_other_latency', 'avg_read_latency', 'avg_write_latency',]
+        #    'conns', 'egress_bytes', 'evicted_objects', 'expired_objects', 'fork_cpu_system',
+        #    'ingress_bytes', 'listener_acc_latency', 'main_thread_cpu_system', 'main_thread_cpu_system_max', 'memory_limit',
+        #    'no_of_keys', 'other_req', 'read_hits', 'read_misses', 'read_req', 'shard_cpu_system',
+        #    'shard_cpu_system_max', 'total_req', 'total_req_max', 'used_memory', 'write_hits', 'write_misses',
+        #    'write_req', 'bigstore_objs_ram', 'bigstore_objs_flash', 'bigstore_io_reads', 'bigstore_io_writes',
+        #    'bigstore_throughput', 'big_write_ram', 'big_write_flash', 'big_del_ram', 'big_del_flash',
+        #]
         # If there are no databases created the following link will 404, so we need to handle this
+
         try:
             stats = self._api_fetch_json("bdbs/stats/last", True)
             device.absolute("redis_enterprise.database_count", len(stats))
         except Exception as e:
             device.absolute("redis_enterprise.database_count", 0)
-            logging.exception('BDB Fech Error: {}'.format(e))
+            self.logger.exception('BDB Fech Error: {}'.format(e))
+
+        for i in stats:
+            db_name = bdb_dict[int(i)].get("name")
+            self.logger.info('DTM: DB name = {}'.format(db_name))
+            for j in stats[i].keys():
+                if j in gauges:
+                    self.logger.info('DTM: stat redisenterprise.{} value is:{}'.format(j, float(stats[i][j])))
+                    foo = device.absolute('redisenterprise.{}'.format(j), float(stats[i][j]))
+                    self.logger.info('DTM: submit says: {}'.format(foo))
+
+
 
     def _api_fetch_json(self, endpoint, allow_redirect):
         headers_sent = {'Content-Type': 'application/json'}
@@ -97,7 +109,7 @@ class RemoteRedisEnterprisePlugin(RemoteBasePlugin):
             verify=False,
         )
         if r.status_code != 200:
-            logging.exception('HTTPS Fech Error: {} returns a {} status: {}'.format(url, r.status_code, r.content))
+            self.logger.exception('HTTPS Fech Error: {} returns a {} status: {}'.format(url, r.status_code, r.content))
 
         return r.json()
 

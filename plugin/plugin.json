@@ -1,6 +1,6 @@
 {
     "name": "custom.remote.python.redisenterprise",
-    "version": "0.1.6",
+    "version": "0.1.28",
     "productiveMinVersion": "1.000",
     "requiredAgentVersion": "1.000",
     "type": "python",
@@ -21,10 +21,55 @@
     "metrics": [
         {
             "timeseries": {
+                "key": "redis_enterprise.avg_latency",
+                "unit": "MicroSecond",
+                "displayname": "Average Database Latency",
+                "aggregation": "avg",
+                "entity": "CUSTOM_DEVICE"
+            }
+        },
+        {
+            "timeseries": {
+                "key": "redis_enterprise.avg_latency_max",
+                "unit": "MicroSecond",
+                "displayname": "Average Database Latency Maximum",
+                "aggregation": "max",
+                "entity": "CUSTOM_DEVICE"
+            }
+        },
+        {
+            "timeseries": {
+                "key": "redis_enterprise.avg_other_latency",
+                "unit": "MicroSecond",
+                "displayname": "Average Database Latency Other Commands",
+                "aggregation": "avg",
+                "entity": "CUSTOM_DEVICE"
+            }
+        },
+        {
+            "timeseries": {
+                "key": "redis_enterprise.avg_write_latency",
+                "unit": "MicroSecond",
+                "displayname": "Average Database Latency Write Commands",
+                "aggregation": "avg",
+                "entity": "CUSTOM_DEVICE"
+            }
+        },
+        {
+            "timeseries": {
+                "key": "redis_enterprise.avg_read_latency",
+                "unit": "MicroSecond",
+                "displayname": "Average Database Latency Read Commands",
+                "aggregation": "avg",
+                "entity": "CUSTOM_DEVICE"
+            }
+        },
+        {
+            "timeseries": {
                 "key": "redis_enterprise.license_days",
                 "unit": "Count",
                 "displayname": "License Days Remaining",
-                "aggregation": "MIN",
+                "aggregation": "min",
                 "entity": "CUSTOM_DEVICE"
             }
         },
@@ -33,7 +78,7 @@
                 "key": "redis_enterprise.database_count",
                 "unit": "Count",
                 "displayname": "Number of Databases on the Cluster",
-                "aggregation": "MIN",
+                "aggregation": "min",
                 "entity": "CUSTOM_DEVICE"
             }
         },
@@ -42,7 +87,7 @@
                 "key": "redis_enterprise.license_shards",
                 "unit": "Count",
                 "displayname": "Licensed Shards",
-                "aggregation": "MIN",
+                "aggregation": "min",
                 "entity": "CUSTOM_DEVICE"
             }
         }
