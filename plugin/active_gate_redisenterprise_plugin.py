@@ -66,7 +66,7 @@ class RemoteRedisEnterprisePlugin(RemoteBasePlugin):
             }
         return bdb_dict
 
-    def get_bdb_stats(self, device, bdb_dict): 
+    def get_bdb_stats(self, cluster_device, bdb_dict, bdb_devices): 
         """ Collect Enterprise database related stats """
         gauges = [
             'avg_latency', 'avg_latency_max', 'avg_other_latency', 'avg_read_latency', 'avg_write_latency', 'conns']
@@ -81,17 +81,17 @@ class RemoteRedisEnterprisePlugin(RemoteBasePlugin):
 
         try:
             stats = self._api_fetch_json("bdbs/stats/last", True)
-            device.absolute("redis_enterprise.database_count", len(stats))
+            cluster_device.absolute("redis_enterprise.database_count", len(stats))
         except Exception as e:
-            device.absolute("redis_enterprise.database_count", 0)
+            cluster_device.absolute("redis_enterprise.database_count", 0)
             self.logger.exception('BDB Fech Error: {}'.format(e))
 
         for i in stats:
             db_name = bdb_dict[int(i)].get("name")
             for j in stats[i].keys():
                 if j in gauges:
-                    self.logger.info('DTM: stat redisenterprise.{} value is:{}'.format(j, float(stats[i][j])))
-                    device.absolute('redisenterprise.{}'.format(j), float(stats[i][j]))
+                    dev = bdb_devices.get(db_name)
+                    dev.absolute('redis_enterprise.{}'.format(j), float(stats[i][j]))
 
 
 
@@ -125,4 +125,9 @@ class RemoteRedisEnterprisePlugin(RemoteBasePlugin):
         device.absolute("redis_enterprise.license_days", re_license)
         device.absolute("redis_enterprise.license_shards", re_shards)
         bdbs = self.get_bdb_dict()
-        self.get_bdb_stats(device, bdbs)
+        bdb_devices = {}
+        for i in bdbs:
+            bdb_devices[bdbs[i]['name']] = group.create_device(
+                '{}:{}'.format(cluster_name, bdbs[i]['name']),
+                '{}:{}'.format(cluster_name, bdbs[i]['name']))
+        self.get_bdb_stats(device, bdbs, bdb_devices)
