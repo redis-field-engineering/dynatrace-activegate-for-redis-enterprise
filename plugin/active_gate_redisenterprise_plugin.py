@@ -69,14 +69,14 @@ class RemoteRedisEnterprisePlugin(RemoteBasePlugin):
     def get_bdb_stats(self, cluster_device, bdb_dict, bdb_devices): 
         """ Collect Enterprise database related stats """
         gauges = [
-            'avg_latency', 'avg_latency_max', 'avg_other_latency', 'avg_read_latency', 'avg_write_latency', 'conns']
-        #    'conns', 'egress_bytes', 'evicted_objects', 'expired_objects', 'fork_cpu_system',
-        #    'ingress_bytes', 'listener_acc_latency', 'main_thread_cpu_system', 'main_thread_cpu_system_max', 'memory_limit',
-        #    'no_of_keys', 'other_req', 'read_hits', 'read_misses', 'read_req', 'shard_cpu_system',
-        #    'shard_cpu_system_max', 'total_req', 'total_req_max', 'used_memory', 'write_hits', 'write_misses',
-        #    'write_req', 'bigstore_objs_ram', 'bigstore_objs_flash', 'bigstore_io_reads', 'bigstore_io_writes',
-        #    'bigstore_throughput', 'big_write_ram', 'big_write_flash', 'big_del_ram', 'big_del_flash',
-        #]
+            'avg_latency', 'avg_latency_max', 'avg_other_latency', 'avg_read_latency', 'avg_write_latency', 'conns'
+            'conns', 'egress_bytes', 'evicted_objects', 'expired_objects', 'fork_cpu_system',
+            'ingress_bytes', 'listener_acc_latency', 'main_thread_cpu_system', 'main_thread_cpu_system_max', 'memory_limit',
+            'no_of_keys', 'other_req', 'read_hits', 'read_misses', 'read_req', 'shard_cpu_system',
+            'shard_cpu_system_max', 'total_req', 'total_req_max', 'used_memory', 'write_hits', 'write_misses',
+            'write_req', 'bigstore_objs_ram', 'bigstore_objs_flash', 'bigstore_io_reads', 'bigstore_io_writes',
+            'bigstore_throughput', 'big_write_ram', 'big_write_flash', 'big_del_ram', 'big_del_flash',
+        ]
         # If there are no databases created the following link will 404, so we need to handle this
 
         try:
@@ -93,9 +93,25 @@ class RemoteRedisEnterprisePlugin(RemoteBasePlugin):
                     dev = bdb_devices.get(db_name)
                     dev.absolute('redis_enterprise.{}'.format(j), float(stats[i][j]))
 
+    def get_events(self, device):
+        evnts = self._api_fetch_json(
+            "logs", True,
+            params = {
+                "stime": (datetime.now() - timedelta(seconds=int(self.config.get('relative_interval')))).strftime("%Y-%m-%dT%H:%M:%SZ"),
+                "order": "desc",
+                "limit": 100,
+            }
+        )
+        for evnt in evnts:
+            msg = {k: v for k, v in evnt.items() if k not in ['time', 'severity']}
+            device.report_custom_info_event(
+                title = msg.get('type'),
+                description = msg.get('description'),
+                properties=msg,
+            )
 
 
-    def _api_fetch_json(self, endpoint, allow_redirect):
+    def _api_fetch_json(self, endpoint, allow_redirect, params=None):
         headers_sent = {'Content-Type': 'application/json'}
         url = '{}/v1/{}'.format(self.url, endpoint)
         auth=HTTPBasicAuth(self.user, self.password)
@@ -105,6 +121,7 @@ class RemoteRedisEnterprisePlugin(RemoteBasePlugin):
             headers=headers_sent,
             allow_redirects=allow_redirect,
             verify=False,
+            params=params,
         )
         if r.status_code != 200:
             self.logger.exception('HTTPS Fech Error: {} returns a {} status: {}'.format(url, r.status_code, r.content))
@@ -131,3 +148,4 @@ class RemoteRedisEnterprisePlugin(RemoteBasePlugin):
                 '{}:{}'.format(cluster_name, bdbs[i]['name']),
                 '{}:{}'.format(cluster_name, bdbs[i]['name']))
         self.get_bdb_stats(device, bdbs, bdb_devices)
+        self.get_events(device)

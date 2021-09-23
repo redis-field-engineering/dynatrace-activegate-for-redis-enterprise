@@ -1,6 +1,6 @@
 {
     "name": "custom.remote.python.redisenterprise",
-    "version": "0.1.38",
+    "version": "0.1.51",
     "productiveMinVersion": "1.000",
     "requiredAgentVersion": "1.000",
     "type": "python",
@@ -19,6 +19,255 @@
     },
     "ui": {},
     "metrics": [
+        {
+            "timeseries": {
+                "key": "redis_enterprise.total_req_max",
+                "unit": "Count",
+                "displayname": "Total Request Count Max",
+                "entity": "CUSTOM_DEVICE"
+            }
+        },
+        {
+            "timeseries": {
+                "key": "redis_enterprise.total_req",
+                "unit": "Count",
+                "displayname": "Total Request Count",
+                "entity": "CUSTOM_DEVICE"
+            }
+        },
+        {
+            "timeseries": {
+                "key": "redis_enterprise.write_req",
+                "unit": "Count",
+                "displayname": "Write Request Count",
+                "entity": "CUSTOM_DEVICE"
+            }
+        },
+        {
+            "timeseries": {
+                "key": "redis_enterprise.read_req",
+                "unit": "Count",
+                "displayname": "Read Request Count",
+                "entity": "CUSTOM_DEVICE"
+            }
+        },
+        {
+            "timeseries": {
+                "key": "redis_enterprise.write_misses",
+                "unit": "Count",
+                "displayname": "Write Hit Misses Count",
+                "entity": "CUSTOM_DEVICE"
+            }
+        },
+        {
+            "timeseries": {
+                "key": "redis_enterprise.write_hits",
+                "unit": "Count",
+                "displayname": "Write Hit Request Count",
+                "entity": "CUSTOM_DEVICE"
+            }
+        },
+        {
+            "timeseries": {
+                "key": "redis_enterprise.read_misses",
+                "unit": "Count",
+                "displayname": "Read Hit Misses Count",
+                "entity": "CUSTOM_DEVICE"
+            }
+        },
+        {
+            "timeseries": {
+                "key": "redis_enterprise.read_hits",
+                "unit": "Count",
+                "displayname": "Read Hit Request Count",
+                "entity": "CUSTOM_DEVICE"
+            }
+        },
+        {
+            "timeseries": {
+                "key": "redis_enterprise.other_req",
+                "unit": "Count",
+                "displayname": "Rate of other (non read/write) requests on DB",
+                "entity": "CUSTOM_DEVICE"
+            }
+        },
+        {
+            "timeseries": {
+                "key": "redis_enterprise.no_of_keys",
+                "unit": "Count",
+                "displayname": "Database Key Count",
+                "entity": "CUSTOM_DEVICE"
+            }
+        },
+        {
+            "timeseries": {
+                "key": "redis_enterprise.listener_acc_latency",
+                "unit": "MicroSecond",
+                "displayname": "Proxy Accumulative latency",
+                "aggregation": "avg",
+                "entity": "CUSTOM_DEVICE"
+            }
+	},
+        {
+            "timeseries": {
+                "key": "redis_enterprise.shard_cpu_system_max",
+                "unit": "Percent",
+                "displayname": "Shard CPU System Max",
+                "entity": "CUSTOM_DEVICE"
+            }
+        },
+        {
+            "timeseries": {
+                "key": "redis_enterprise.shard_cpu_system",
+                "unit": "Percent",
+                "displayname": "Shard CPU System",
+                "entity": "CUSTOM_DEVICE"
+            }
+        },
+        {
+            "timeseries": {
+                "key": "redis_enterprise.main_thread_cpu_system_max",
+                "unit": "Percent",
+                "displayname": "Database CPU System Max",
+                "entity": "CUSTOM_DEVICE"
+            }
+        },
+        {
+            "timeseries": {
+                "key": "redis_enterprise.main_thread_cpu_system",
+                "unit": "Percent",
+                "displayname": "Database CPU System",
+                "entity": "CUSTOM_DEVICE"
+            }
+        },
+        {
+            "timeseries": {
+                "key": "redis_enterprise.fork_cpu_system",
+                "unit": "Percent",
+                "displayname": "Database CPU Fork",
+                "entity": "CUSTOM_DEVICE"
+            }
+        },
+        {
+            "timeseries": {
+                "key": "redis_enterprise.expired_objects",
+                "unit": "Count",
+                "displayname": "Database Object Expired",
+                "entity": "CUSTOM_DEVICE"
+            }
+        },
+        {
+            "timeseries": {
+                "key": "redis_enterprise.evicted_objects",
+                "unit": "Count",
+                "displayname": "Database Object Evicted",
+                "entity": "CUSTOM_DEVICE"
+            }
+        },
+        {
+            "timeseries": {
+                "key": "redis_enterprise.used_memory",
+                "unit": "Byte",
+                "displayname": "Database Used Memory",
+                "entity": "CUSTOM_DEVICE"
+            }
+        },
+        {
+            "timeseries": {
+                "key": "redis_enterprise.memory_limit",
+                "unit": "Byte",
+                "displayname": "Database Memory Limit",
+                "entity": "CUSTOM_DEVICE"
+            }
+        },
+        {
+            "timeseries": {
+                "key": "redis_enterprise.ingress_bytes",
+                "unit": "Byte",
+                "displayname": "Bytes Received",
+                "entity": "CUSTOM_DEVICE"
+            }
+        },
+        {
+            "timeseries": {
+                "key": "redis_enterprise.egress_bytes",
+                "unit": "Byte",
+                "displayname": "Bytes Sent",
+                "entity": "CUSTOM_DEVICE"
+            }
+        },
+        {
+            "timeseries": {
+                "key": "redis_enterprise.big_write_ram",
+                "unit": "Count",
+                "displayname": "RoF Flash RAM Request Rate",
+                "entity": "CUSTOM_DEVICE"
+            }
+        },
+        {
+            "timeseries": {
+                "key": "redis_enterprise.big_write_flash",
+                "unit": "Count",
+                "displayname": "RoF Flash Write Request Rate",
+                "entity": "CUSTOM_DEVICE"
+            }
+        },
+        {
+            "timeseries": {
+                "key": "redis_enterprise.bigstore_throughput",
+                "unit": "Count",
+                "displayname": "RoF Throughput to Flash",
+                "entity": "CUSTOM_DEVICE"
+            }
+        },
+        {
+            "timeseries": {
+                "key": "redis_enterprise.bigstore_objs_ram",
+                "unit": "Count",
+                "displayname": "RoF RAM Object Count",
+                "entity": "CUSTOM_DEVICE"
+            }
+        },
+        {
+            "timeseries": {
+                "key": "redis_enterprise.bigstore_objs_flash",
+                "unit": "Count",
+                "displayname": "RoF Flash Object Count",
+                "entity": "CUSTOM_DEVICE"
+            }
+        },
+        {
+            "timeseries": {
+                "key": "redis_enterprise.bigstore_io_writes",
+                "unit": "Count",
+                "displayname": "RoF Write Request Rate",
+                "entity": "CUSTOM_DEVICE"
+            }
+        },
+        {
+            "timeseries": {
+                "key": "redis_enterprise.bigstore_io_reads",
+                "unit": "Count",
+                "displayname": "RoF Read Request Rate",
+                "entity": "CUSTOM_DEVICE"
+            }
+        },
+        {
+            "timeseries": {
+                "key": "redis_enterprise.big_del_ram",
+                "unit": "Count",
+                "displayname": "RoF RAM Delete Request Rate",
+                "entity": "CUSTOM_DEVICE"
+            }
+        },
+        {
+            "timeseries": {
+                "key": "redis_enterprise.big_del_flash",
+                "unit": "Count",
+                "displayname": "RoF Flash Delete Request Rate",
+                "entity": "CUSTOM_DEVICE"
+            }
+        },
         {
             "timeseries": {
                 "key": "redis_enterprise.conns",
