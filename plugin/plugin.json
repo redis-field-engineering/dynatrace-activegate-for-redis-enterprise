@@ -1,6 +1,6 @@
 {
     "name": "custom.remote.python.redisenterprise",
-    "version": "0.1.52",
+    "version": "0.1.55",
     "productiveMinVersion": "1.000",
     "requiredAgentVersion": "1.000",
     "type": "python",
@@ -19,6 +19,14 @@
     },
     "ui": {},
     "metrics": [
+        {
+            "timeseries": {
+                "key": "redis_enterprise.shards_used",
+                "unit": "Count",
+                "displayname": "Total number of active Database shards",
+                "entity": "CUSTOM_DEVICE"
+            }
+        },
         {
             "timeseries": {
                 "key": "redis_enterprise.shard_count",
