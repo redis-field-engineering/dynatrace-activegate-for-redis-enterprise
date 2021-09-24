@@ -4,3 +4,4 @@ ansible/vars/main.yml
 ansible/files/*.whl
 *.log
 devnote*.md
+plugin/.venv/*
