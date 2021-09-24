@@ -88,9 +88,11 @@ class RemoteRedisEnterprisePlugin(RemoteBasePlugin):
 
         for i in stats:
             db_name = bdb_dict[int(i)].get("name")
+            dev = bdb_devices.get(db_name)
+            dev.absolute('redis_enterprise.endpoints', float(bdb_dict[int(i)].get("endpoints")))
+            dev.absolute('redis_enterprise.shard_count', float(bdb_dict[int(i)].get("shards_used")))
             for j in stats[i].keys():
                 if j in gauges:
-                    dev = bdb_devices.get(db_name)
                     dev.absolute('redis_enterprise.{}'.format(j), float(stats[i][j]))
 
     def get_events(self, device):

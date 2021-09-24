@@ -1,6 +1,6 @@
 {
     "name": "custom.remote.python.redisenterprise",
-    "version": "0.1.51",
+    "version": "0.1.52",
     "productiveMinVersion": "1.000",
     "requiredAgentVersion": "1.000",
     "type": "python",
@@ -19,6 +19,22 @@
     },
     "ui": {},
     "metrics": [
+        {
+            "timeseries": {
+                "key": "redis_enterprise.shard_count",
+                "unit": "Count",
+                "displayname": "Number of active Database shards",
+                "entity": "CUSTOM_DEVICE"
+            }
+        },
+        {
+            "timeseries": {
+                "key": "redis_enterprise.endpoints",
+                "unit": "Count",
+                "displayname": "Number of active Database endpoints",
+                "entity": "CUSTOM_DEVICE"
+            }
+        },
         {
             "timeseries": {
                 "key": "redis_enterprise.total_req_max",
