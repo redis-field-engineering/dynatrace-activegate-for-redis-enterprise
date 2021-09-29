@@ -2,8 +2,8 @@
 
 ### Prerequisites
 
-1. Working Dynatrace Install
-2. Working ActiveGate Instance
+1. Working [Dynatrace Install](https://www.dynatrace.com/support/help/setup-and-configuration/)
+2. Working [ActiveGate Instance](https://www.dynatrace.com/support/help/setup-and-configuration/dynatrace-activegate/)
 3. Login to a Redis Enterprise Cluster
 
 
@@ -32,6 +32,8 @@ Login to your Redis Entprise Instance and click on Access Control
 #### Install the Zip file
 
 ```
+cd /tmp/ 
+wget https://redislabs-field-engineering.s3.us-west-1.amazonaws.com/private-preview/active_gate_redisenterprise_plugin/custom.remote.python.redisenterprise.zip
 sudo mv /tmp/custom.remote.python.redisenterprise.zip /opt/dynatrace/remotepluginmodule/plugin_deployment/custom.remote.python.redisenterprise.zip
 ```
 
