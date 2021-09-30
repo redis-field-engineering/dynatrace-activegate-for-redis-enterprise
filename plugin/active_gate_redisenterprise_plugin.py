@@ -86,14 +86,22 @@ class RemoteRedisEnterprisePlugin(RemoteBasePlugin):
             cluster_device.absolute("redis_enterprise.database_count", 0)
             self.logger.exception('BDB Fech Error: {}'.format(e))
 
+        cluster_total_req = 0
+
         for i in stats:
             db_name = bdb_dict[int(i)].get("name")
             dev = bdb_devices.get(db_name)
             dev.absolute('redis_enterprise.endpoints', float(bdb_dict[int(i)].get("endpoints")))
             dev.absolute('redis_enterprise.shard_count', float(bdb_dict[int(i)].get("shards_used")))
+            total_req = stats[i].get('total_req')
+            if total_req is not None:
+                cluster_total_req += float(total_req)
             for j in stats[i].keys():
                 if j in gauges:
                     dev.absolute('redis_enterprise.{}'.format(j), float(stats[i][j]))
+
+        # send the total as well
+        cluster_device.absolute("redis_enterprise.cluster_total_req", cluster_total_req)
 
     def get_events(self, device):
         evnts = self._api_fetch_json(
@@ -111,6 +119,21 @@ class RemoteRedisEnterprisePlugin(RemoteBasePlugin):
                 description = msg.get('description'),
                 properties=msg,
             )
+
+    def  get_nodes(self, device):
+        stats = self._api_fetch_json(
+            "nodes",
+            True,
+        )
+        res = {'total_node_cores': 0, 'total_node_memory': 0, 'total_node_count': 0, 'total_active_nodes': 0}
+        for i in stats:
+            res['total_node_cores'] += i['cores']
+            res['total_node_memory'] += i['total_memory']
+            res['total_node_count'] += 1
+            if i['status'] == "active":
+                res['total_active_nodes'] += 1
+        for x in res.keys():
+            device.absolute('redis_enterprise.{}'.format(x), float(res[x]))
 
 
     def _api_fetch_json(self, endpoint, allow_redirect, params=None):
@@ -156,3 +179,4 @@ class RemoteRedisEnterprisePlugin(RemoteBasePlugin):
 
         self.get_bdb_stats(device, bdbs, bdb_devices)
         self.get_events(device)
+        self.get_nodes(device)

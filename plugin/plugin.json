@@ -1,6 +1,6 @@
 {
     "name": "custom.remote.python.redisenterprise",
-    "version": "0.1.55",
+    "version": "0.1.56",
     "productiveMinVersion": "1.000",
     "requiredAgentVersion": "1.000",
     "type": "python",
@@ -19,6 +19,38 @@
     },
     "ui": {},
     "metrics": [
+        {
+            "timeseries": {
+                "key": "redis_enterprise.total_active_nodes",
+                "unit": "Count",
+                "displayname": "Total number of active nodes",
+                "entity": "CUSTOM_DEVICE"
+            }
+        },
+        {
+            "timeseries": {
+                "key": "redis_enterprise.total_node_count",
+                "unit": "Count",
+                "displayname": "Total number of available nodes",
+                "entity": "CUSTOM_DEVICE"
+            }
+        },
+        {
+            "timeseries": {
+                "key": "redis_enterprise.total_node_memory",
+                "unit": "Byte",
+                "displayname": "Total number memory available",
+                "entity": "CUSTOM_DEVICE"
+            }
+        },
+        {
+            "timeseries": {
+                "key": "redis_enterprise.total_node_cores",
+                "unit": "Count",
+                "displayname": "Total number cores available",
+                "entity": "CUSTOM_DEVICE"
+            }
+        },
         {
             "timeseries": {
                 "key": "redis_enterprise.shards_used",
@@ -56,6 +88,14 @@
                 "key": "redis_enterprise.total_req",
                 "unit": "Count",
                 "displayname": "Total Request Count",
+                "entity": "CUSTOM_DEVICE"
+            }
+        },
+        {
+            "timeseries": {
+                "key": "redis_enterprise.cluster_total_req",
+                "unit": "Count",
+                "displayname": "Cluster Total Request Count",
                 "entity": "CUSTOM_DEVICE"
             }
         },
