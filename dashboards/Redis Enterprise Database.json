@@ -5,35 +5,36 @@
     ],
     "clusterVersion": "1.226.91.20210918-122217"
   },
-  "id": "d224136c-0fe3-4e95-bf30-99c32ef7e099",
+  "id": "15a61e48-1eab-4b32-93d5-d786b02bfac3",
   "dashboardMetadata": {
-    "name": "Redis Enterprise Overview",
+    "name": "Redis Enterprise Database",
     "shared": false,
     "owner": "christian@redis.com",
     "dynamicFilters": {
       "filters": [
-        "HOST_TAG_KEY:RedisEnterpriseCluster"
+        "HOST_TAG_KEY:RedisEnterpriseCluster",
+        "HOST_TAG_KEY:RedisEnterpriseDatabase"
       ]
     }
   },
   "tiles": [
     {
-      "name": "Shards Licensed",
+      "name": "Ops/Second",
       "tileType": "DATA_EXPLORER",
       "configured": true,
       "bounds": {
-        "top": 0,
-        "left": 228,
-        "width": 228,
-        "height": 114
+        "top": 114,
+        "left": 0,
+        "width": 912,
+        "height": 266
       },
       "tileFilter": {},
-      "customName": "Shards Licensed",
+      "customName": "Data explorer results",
       "queries": [
         {
           "id": "A",
-          "metric": "ext:Redis_Enterprise.redis_enterprise.license_shards",
-          "spaceAggregation": "MAX",
+          "metric": "ext:Redis_Enterprise.redis_enterprise.other_req",
+          "spaceAggregation": "AVG",
           "timeAggregation": "DEFAULT",
           "splitBy": [
             "dt.entity.custom_device"
@@ -42,422 +43,30 @@
             "nestedFilters": [],
             "criteria": []
           },
-          "foldTransformation": "LAST_VALUE",
           "enabled": true
-        }
-      ],
-      "visualConfig": {
-        "type": "SINGLE_VALUE",
-        "global": {
-          "theme": "DEFAULT",
-          "threshold": {
-            "axisTarget": "LEFT",
-            "rules": [
-              {
-                "color": "#7dc540"
-              },
-              {
-                "color": "#f5d30f"
-              },
-              {
-                "color": "#dc172a"
-              }
-            ]
-          },
-          "seriesType": "LINE",
-          "hasTrendline": false
         },
-        "rules": [],
-        "axes": {
-          "xAxis": {
-            "displayName": "",
-            "visible": true
-          },
-          "yAxes": [
-            {
-              "displayName": "",
-              "visible": true,
-              "min": "AUTO",
-              "max": "AUTO",
-              "position": "LEFT",
-              "queryIds": [
-                "A"
-              ],
-              "defaultAxis": true
-            }
-          ]
-        }
-      }
-    },
-    {
-      "name": "Shards Used",
-      "tileType": "DATA_EXPLORER",
-      "configured": true,
-      "bounds": {
-        "top": 0,
-        "left": 456,
-        "width": 228,
-        "height": 114
-      },
-      "tileFilter": {},
-      "customName": "Shards Licensed",
-      "queries": [
         {
-          "id": "A",
-          "metric": "ext:Redis_Enterprise.redis_enterprise.shards_used",
-          "spaceAggregation": "MAX",
-          "timeAggregation": "DEFAULT",
-          "splitBy": [],
-          "filterBy": {
-            "nestedFilters": [],
-            "criteria": []
-          },
-          "foldTransformation": "LAST_VALUE",
-          "enabled": true
-        }
-      ],
-      "visualConfig": {
-        "type": "SINGLE_VALUE",
-        "global": {
-          "theme": "DEFAULT",
-          "threshold": {
-            "axisTarget": "LEFT",
-            "rules": [
-              {
-                "color": "#7dc540"
-              },
-              {
-                "color": "#f5d30f"
-              },
-              {
-                "color": "#dc172a"
-              }
-            ]
-          },
-          "seriesType": "LINE",
-          "hasTrendline": false
-        },
-        "rules": [],
-        "axes": {
-          "xAxis": {
-            "displayName": "",
-            "visible": true
-          },
-          "yAxes": [
-            {
-              "displayName": "",
-              "visible": true,
-              "min": "AUTO",
-              "max": "AUTO",
-              "position": "LEFT",
-              "queryIds": [
-                "A"
-              ],
-              "defaultAxis": true
-            }
-          ]
-        }
-      }
-    },
-    {
-      "name": "Node Count",
-      "tileType": "DATA_EXPLORER",
-      "configured": true,
-      "bounds": {
-        "top": 114,
-        "left": 0,
-        "width": 342,
-        "height": 114
-      },
-      "tileFilter": {},
-      "customName": "Shards Licensed",
-      "queries": [
-        {
-          "id": "A",
-          "metric": "ext:Redis_Enterprise.redis_enterprise.total_node_count",
-          "spaceAggregation": "MAX",
-          "timeAggregation": "DEFAULT",
-          "splitBy": [],
-          "filterBy": {
-            "nestedFilters": [],
-            "criteria": []
-          },
-          "foldTransformation": "LAST_VALUE",
-          "enabled": true
-        }
-      ],
-      "visualConfig": {
-        "type": "SINGLE_VALUE",
-        "global": {
-          "theme": "DEFAULT",
-          "threshold": {
-            "axisTarget": "LEFT",
-            "rules": [
-              {
-                "color": "#7dc540"
-              },
-              {
-                "color": "#f5d30f"
-              },
-              {
-                "color": "#dc172a"
-              }
-            ]
-          },
-          "seriesType": "LINE",
-          "hasTrendline": false
-        },
-        "rules": [],
-        "axes": {
-          "xAxis": {
-            "displayName": "",
-            "visible": true
-          },
-          "yAxes": [
-            {
-              "displayName": "",
-              "visible": true,
-              "min": "AUTO",
-              "max": "AUTO",
-              "position": "LEFT",
-              "queryIds": [
-                "A"
-              ],
-              "defaultAxis": true
-            }
-          ]
-        }
-      }
-    },
-    {
-      "name": "Active Nodes",
-      "tileType": "DATA_EXPLORER",
-      "configured": true,
-      "bounds": {
-        "top": 114,
-        "left": 342,
-        "width": 342,
-        "height": 114
-      },
-      "tileFilter": {},
-      "customName": "Shards Licensed",
-      "queries": [
-        {
-          "id": "A",
-          "metric": "ext:Redis_Enterprise.redis_enterprise.total_active_nodes",
-          "spaceAggregation": "MAX",
-          "timeAggregation": "DEFAULT",
-          "splitBy": [],
-          "filterBy": {
-            "nestedFilters": [],
-            "criteria": []
-          },
-          "foldTransformation": "LAST_VALUE",
-          "enabled": true
-        }
-      ],
-      "visualConfig": {
-        "type": "SINGLE_VALUE",
-        "global": {
-          "theme": "DEFAULT",
-          "threshold": {
-            "axisTarget": "LEFT",
-            "rules": [
-              {
-                "color": "#7dc540"
-              },
-              {
-                "color": "#f5d30f"
-              },
-              {
-                "color": "#dc172a"
-              }
-            ]
-          },
-          "seriesType": "LINE",
-          "hasTrendline": false
-        },
-        "rules": [],
-        "axes": {
-          "xAxis": {
-            "displayName": "",
-            "visible": true
-          },
-          "yAxes": [
-            {
-              "displayName": "",
-              "visible": true,
-              "min": "AUTO",
-              "max": "AUTO",
-              "position": "LEFT",
-              "queryIds": [
-                "A"
-              ],
-              "defaultAxis": true
-            }
-          ]
-        }
-      }
-    },
-    {
-      "name": "Total Cluster Cores",
-      "tileType": "DATA_EXPLORER",
-      "configured": true,
-      "bounds": {
-        "top": 228,
-        "left": 0,
-        "width": 342,
-        "height": 114
-      },
-      "tileFilter": {},
-      "customName": "Shards Licensed",
-      "queries": [
-        {
-          "id": "A",
-          "metric": "ext:Redis_Enterprise.redis_enterprise.total_node_cores",
-          "spaceAggregation": "MAX",
-          "timeAggregation": "DEFAULT",
-          "splitBy": [],
-          "filterBy": {
-            "nestedFilters": [],
-            "criteria": []
-          },
-          "foldTransformation": "LAST_VALUE",
-          "enabled": true
-        }
-      ],
-      "visualConfig": {
-        "type": "SINGLE_VALUE",
-        "global": {
-          "theme": "DEFAULT",
-          "threshold": {
-            "axisTarget": "LEFT",
-            "rules": [
-              {
-                "color": "#7dc540"
-              },
-              {
-                "color": "#f5d30f"
-              },
-              {
-                "color": "#dc172a"
-              }
-            ]
-          },
-          "seriesType": "LINE",
-          "hasTrendline": false
-        },
-        "rules": [],
-        "axes": {
-          "xAxis": {
-            "displayName": "",
-            "visible": true
-          },
-          "yAxes": [
-            {
-              "displayName": "",
-              "visible": true,
-              "min": "AUTO",
-              "max": "AUTO",
-              "position": "LEFT",
-              "queryIds": [
-                "A"
-              ],
-              "defaultAxis": true
-            }
-          ]
-        }
-      }
-    },
-    {
-      "name": "Total Cluster Memory",
-      "tileType": "DATA_EXPLORER",
-      "configured": true,
-      "bounds": {
-        "top": 228,
-        "left": 342,
-        "width": 342,
-        "height": 114
-      },
-      "tileFilter": {},
-      "customName": "Shards Licensed",
-      "queries": [
-        {
-          "id": "A",
-          "metric": "ext:Redis_Enterprise.redis_enterprise.total_node_memory",
-          "spaceAggregation": "MAX",
-          "timeAggregation": "DEFAULT",
-          "splitBy": [],
-          "filterBy": {
-            "nestedFilters": [],
-            "criteria": []
-          },
-          "foldTransformation": "LAST_VALUE",
-          "enabled": true
-        }
-      ],
-      "visualConfig": {
-        "type": "SINGLE_VALUE",
-        "global": {
-          "theme": "DEFAULT",
-          "threshold": {
-            "axisTarget": "LEFT",
-            "rules": [
-              {
-                "color": "#7dc540"
-              },
-              {
-                "color": "#f5d30f"
-              },
-              {
-                "color": "#dc172a"
-              }
-            ]
-          },
-          "seriesType": "LINE",
-          "hasTrendline": false
-        },
-        "rules": [],
-        "axes": {
-          "xAxis": {
-            "displayName": "",
-            "visible": true
-          },
-          "yAxes": [
-            {
-              "displayName": "",
-              "visible": true,
-              "min": "AUTO",
-              "max": "AUTO",
-              "position": "LEFT",
-              "queryIds": [
-                "A"
-              ],
-              "defaultAxis": true
-            }
-          ]
-        }
-      }
-    },
-    {
-      "name": "Total Requests",
-      "tileType": "DATA_EXPLORER",
-      "configured": true,
-      "bounds": {
-        "top": 342,
-        "left": 0,
-        "width": 684,
-        "height": 304
-      },
-      "tileFilter": {},
-      "customName": "Data explorer results",
-      "queries": [
-        {
-          "id": "A",
-          "metric": "ext:Redis_Enterprise.redis_enterprise.cluster_total_req",
+          "id": "B",
+          "metric": "ext:Redis_Enterprise.redis_enterprise.read_req",
           "spaceAggregation": "AVG",
           "timeAggregation": "DEFAULT",
-          "splitBy": [],
+          "splitBy": [
+            "dt.entity.custom_device"
+          ],
+          "filterBy": {
+            "nestedFilters": [],
+            "criteria": []
+          },
+          "enabled": true
+        },
+        {
+          "id": "C",
+          "metric": "ext:Redis_Enterprise.redis_enterprise.write_req",
+          "spaceAggregation": "AVG",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [
+            "dt.entity.custom_device"
+          ],
           "filterBy": {
             "nestedFilters": [],
             "criteria": []
@@ -468,7 +77,7 @@
       "visualConfig": {
         "type": "GRAPH_CHART",
         "global": {
-          "theme": "GREEN",
+          "theme": "DEFAULT",
           "threshold": {
             "axisTarget": "LEFT",
             "rules": [
@@ -485,14 +94,7 @@
           },
           "seriesType": "LINE"
         },
-        "rules": [
-          {
-            "matcher": "A:",
-            "properties": {
-              "seriesType": "AREA"
-            }
-          }
-        ],
+        "rules": [],
         "axes": {
           "xAxis": {
             "displayName": "",
@@ -506,7 +108,9 @@
               "max": "AUTO",
               "position": "LEFT",
               "queryIds": [
-                "A"
+                "A",
+                "B",
+                "C"
               ],
               "defaultAxis": true
             }
@@ -515,26 +119,24 @@
       }
     },
     {
-      "name": "License Days Remaing",
+      "name": "Average Latency",
       "tileType": "DATA_EXPLORER",
       "configured": true,
       "bounds": {
         "top": 0,
         "left": 0,
-        "width": 228,
+        "width": 456,
         "height": 114
       },
       "tileFilter": {},
-      "customName": "DaysRemaing",
+      "customName": "Single value",
       "queries": [
         {
           "id": "A",
-          "metric": "ext:Redis_Enterprise.redis_enterprise.license_days",
-          "spaceAggregation": "MAX",
+          "metric": "ext:Redis_Enterprise.redis_enterprise.avg_latency",
+          "spaceAggregation": "AVG",
           "timeAggregation": "DEFAULT",
-          "splitBy": [
-            "dt.entity.custom_device"
-          ],
+          "splitBy": [],
           "filterBy": {
             "nestedFilters": [],
             "criteria": []
@@ -550,21 +152,18 @@
             "axisTarget": "LEFT",
             "rules": [
               {
-                "value": 0,
-                "color": "#dc172a"
+                "color": "#7dc540"
               },
               {
-                "value": 7,
                 "color": "#f5d30f"
               },
               {
-                "value": 10,
-                "color": "#7dc540"
+                "color": "#dc172a"
               }
             ]
           },
           "seriesType": "LINE",
-          "hasTrendline": false
+          "hasTrendline": true
         },
         "rules": [],
         "axes": {
@@ -582,6 +181,481 @@
               "queryIds": [
                 "A",
                 ""
+              ],
+              "defaultAxis": true
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "Ops/Second",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 0,
+        "left": 456,
+        "width": 456,
+        "height": 114
+      },
+      "tileFilter": {},
+      "customName": "Single value",
+      "queries": [
+        {
+          "id": "A",
+          "metric": "ext:Redis_Enterprise.redis_enterprise.cluster_total_req",
+          "spaceAggregation": "AVG",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [],
+          "filterBy": {
+            "nestedFilters": [],
+            "criteria": []
+          },
+          "enabled": true
+        }
+      ],
+      "visualConfig": {
+        "type": "SINGLE_VALUE",
+        "global": {
+          "theme": "DEFAULT",
+          "threshold": {
+            "axisTarget": "LEFT",
+            "rules": [
+              {
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "color": "#dc172a"
+              }
+            ]
+          },
+          "seriesType": "LINE",
+          "hasTrendline": true
+        },
+        "rules": [],
+        "axes": {
+          "xAxis": {
+            "displayName": "",
+            "visible": true
+          },
+          "yAxes": [
+            {
+              "displayName": "",
+              "visible": true,
+              "min": "AUTO",
+              "max": "AUTO",
+              "position": "LEFT",
+              "queryIds": [
+                "A",
+                ""
+              ],
+              "defaultAxis": true
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "Latency",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 380,
+        "left": 0,
+        "width": 912,
+        "height": 266
+      },
+      "tileFilter": {},
+      "customName": "Data explorer results",
+      "queries": [
+        {
+          "id": "A",
+          "metric": "ext:Redis_Enterprise.redis_enterprise.avg_other_latency",
+          "spaceAggregation": "AVG",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [],
+          "filterBy": {
+            "nestedFilters": [],
+            "criteria": []
+          },
+          "enabled": true
+        },
+        {
+          "id": "B",
+          "metric": "ext:Redis_Enterprise.redis_enterprise.avg_read_latency",
+          "spaceAggregation": "AVG",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [],
+          "filterBy": {
+            "nestedFilters": [],
+            "criteria": []
+          },
+          "enabled": true
+        },
+        {
+          "id": "C",
+          "metric": "ext:Redis_Enterprise.redis_enterprise.avg_write_latency",
+          "spaceAggregation": "AVG",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [],
+          "filterBy": {
+            "nestedFilters": [],
+            "criteria": []
+          },
+          "enabled": true
+        }
+      ],
+      "visualConfig": {
+        "type": "GRAPH_CHART",
+        "global": {
+          "theme": "DEFAULT",
+          "threshold": {
+            "axisTarget": "LEFT",
+            "rules": [
+              {
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "color": "#dc172a"
+              }
+            ]
+          },
+          "seriesType": "LINE"
+        },
+        "rules": [],
+        "axes": {
+          "xAxis": {
+            "displayName": "",
+            "visible": true
+          },
+          "yAxes": [
+            {
+              "displayName": "",
+              "visible": true,
+              "min": "AUTO",
+              "max": "AUTO",
+              "position": "LEFT",
+              "queryIds": [
+                "A",
+                "B",
+                "C"
+              ],
+              "defaultAxis": true
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "MemoryUsage",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 646,
+        "left": 0,
+        "width": 456,
+        "height": 266
+      },
+      "tileFilter": {},
+      "customName": "Data explorer results",
+      "queries": [
+        {
+          "id": "A",
+          "metric": "ext:Redis_Enterprise.redis_enterprise.memory_limit",
+          "spaceAggregation": "AVG",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [],
+          "filterBy": {
+            "nestedFilters": [],
+            "criteria": []
+          },
+          "enabled": true
+        },
+        {
+          "id": "B",
+          "metric": "ext:Redis_Enterprise.redis_enterprise.used_memory",
+          "spaceAggregation": "AVG",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [],
+          "filterBy": {
+            "nestedFilters": [],
+            "criteria": []
+          },
+          "enabled": true
+        }
+      ],
+      "visualConfig": {
+        "type": "GRAPH_CHART",
+        "global": {
+          "theme": "DEFAULT",
+          "threshold": {
+            "axisTarget": "LEFT",
+            "rules": [
+              {
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "color": "#dc172a"
+              }
+            ]
+          },
+          "seriesType": "LINE"
+        },
+        "rules": [],
+        "axes": {
+          "xAxis": {
+            "displayName": "",
+            "visible": true
+          },
+          "yAxes": [
+            {
+              "displayName": "",
+              "visible": true,
+              "min": "AUTO",
+              "max": "AUTO",
+              "position": "LEFT",
+              "queryIds": [
+                "A",
+                "B"
+              ],
+              "defaultAxis": true
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "Key Count",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 646,
+        "left": 456,
+        "width": 456,
+        "height": 266
+      },
+      "tileFilter": {},
+      "customName": "Data explorer results",
+      "queries": [
+        {
+          "id": "A",
+          "metric": "ext:Redis_Enterprise.redis_enterprise.no_of_keys",
+          "spaceAggregation": "AVG",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [],
+          "filterBy": {
+            "nestedFilters": [],
+            "criteria": []
+          },
+          "enabled": true
+        }
+      ],
+      "visualConfig": {
+        "type": "GRAPH_CHART",
+        "global": {
+          "theme": "DEFAULT",
+          "threshold": {
+            "axisTarget": "LEFT",
+            "rules": [
+              {
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "color": "#dc172a"
+              }
+            ]
+          },
+          "seriesType": "LINE"
+        },
+        "rules": [],
+        "axes": {
+          "xAxis": {
+            "displayName": "",
+            "visible": true
+          },
+          "yAxes": [
+            {
+              "displayName": "",
+              "visible": true,
+              "min": "AUTO",
+              "max": "AUTO",
+              "position": "LEFT",
+              "queryIds": [
+                "A"
+              ],
+              "defaultAxis": true
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "NetworkUsage",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 912,
+        "left": 0,
+        "width": 456,
+        "height": 266
+      },
+      "tileFilter": {},
+      "customName": "Data explorer results",
+      "queries": [
+        {
+          "id": "A",
+          "metric": "ext:Redis_Enterprise.redis_enterprise.ingress_bytes",
+          "spaceAggregation": "AVG",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [],
+          "filterBy": {
+            "nestedFilters": [],
+            "criteria": []
+          },
+          "enabled": true
+        },
+        {
+          "id": "B",
+          "metric": "ext:Redis_Enterprise.redis_enterprise.egress_bytes",
+          "spaceAggregation": "AVG",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [],
+          "filterBy": {
+            "nestedFilters": [],
+            "criteria": []
+          },
+          "enabled": true
+        }
+      ],
+      "visualConfig": {
+        "type": "GRAPH_CHART",
+        "global": {
+          "theme": "DEFAULT",
+          "threshold": {
+            "axisTarget": "LEFT",
+            "rules": [
+              {
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "color": "#dc172a"
+              }
+            ]
+          },
+          "seriesType": "LINE"
+        },
+        "rules": [],
+        "axes": {
+          "xAxis": {
+            "displayName": "",
+            "visible": true
+          },
+          "yAxes": [
+            {
+              "displayName": "",
+              "visible": true,
+              "min": "AUTO",
+              "max": "AUTO",
+              "position": "LEFT",
+              "queryIds": [
+                "A",
+                "B"
+              ],
+              "defaultAxis": true
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "Retention",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 912,
+        "left": 456,
+        "width": 456,
+        "height": 266
+      },
+      "tileFilter": {},
+      "customName": "Data explorer results",
+      "queries": [
+        {
+          "id": "A",
+          "metric": "ext:Redis_Enterprise.redis_enterprise.evicted_objects",
+          "spaceAggregation": "AVG",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [],
+          "filterBy": {
+            "nestedFilters": [],
+            "criteria": []
+          },
+          "enabled": true
+        },
+        {
+          "id": "B",
+          "metric": "ext:Redis_Enterprise.redis_enterprise.expired_objects",
+          "spaceAggregation": "AVG",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [],
+          "filterBy": {
+            "nestedFilters": [],
+            "criteria": []
+          },
+          "enabled": true
+        }
+      ],
+      "visualConfig": {
+        "type": "GRAPH_CHART",
+        "global": {
+          "theme": "DEFAULT",
+          "threshold": {
+            "axisTarget": "LEFT",
+            "rules": [
+              {
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "color": "#dc172a"
+              }
+            ]
+          },
+          "seriesType": "LINE"
+        },
+        "rules": [],
+        "axes": {
+          "xAxis": {
+            "displayName": "",
+            "visible": true
+          },
+          "yAxes": [
+            {
+              "displayName": "",
+              "visible": true,
+              "min": "AUTO",
+              "max": "AUTO",
+              "position": "LEFT",
+              "queryIds": [
+                "A",
+                "B"
               ],
               "defaultAxis": true
             }
