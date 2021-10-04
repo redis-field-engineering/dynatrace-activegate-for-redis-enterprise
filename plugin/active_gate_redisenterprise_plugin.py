@@ -173,7 +173,7 @@ class RemoteRedisEnterprisePlugin(RemoteBasePlugin):
                 '{}:{}'.format(cluster_name, bdbs[i]['name']),
                 '{}:{}'.format(cluster_name, bdbs[i]['name']))
 
-        device.absolute("redis_enterprise.license_days", re_license)
+        device.absolute("redis_enterprise.license_days", max(re_license, 0))
         device.absolute("redis_enterprise.license_shards", re_shards)
         device.absolute("redis_enterprise.shards_used", used_shards_total)
 
