@@ -84,3 +84,16 @@ The cluster level information is the FQDN of the cluster and the database level 
 
 #### DB Stats
 ![DB Stats](docs/bdb_stats.png)
+
+### Enhanced Dashboards
+
+There are two example dashboards for<br>
+
+- [Cluster Statistics](./Redis_Enterprise_Overview.json)
+- [Database Statistics](./Redis_Enterprise_Database.json)
+
+
+#### Screenshots
+
+![Cluster Dashboard](docs/cluster_dashboard.png)
+![Database Dashboard](docs/database_dashboard.png)
