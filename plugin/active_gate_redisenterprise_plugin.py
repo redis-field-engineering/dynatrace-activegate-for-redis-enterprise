@@ -69,9 +69,9 @@ class RemoteRedisEnterprisePlugin(RemoteBasePlugin):
     def get_bdb_stats(self, cluster_device, bdb_dict, bdb_devices): 
         """ Collect Enterprise database related stats """
         gauges = [
-            'avg_latency', 'avg_latency_max', 'avg_other_latency', 'avg_read_latency', 'avg_write_latency', 'conns'
+            'avg_latency', 'avg_latency_max', 'avg_other_latency', 'avg_read_latency', 'avg_write_latency',
             'conns', 'egress_bytes', 'evicted_objects', 'expired_objects', 'fork_cpu_system',
-            'ingress_bytes', 'listener_acc_latency', 'main_thread_cpu_system', 'main_thread_cpu_system_max', 'memory_limit',
+            'ingress_bytes', 'listener_acc_latency', 'main_thread_cpu_system', 'main_thread_cpu_system_max',
             'no_of_keys', 'other_req', 'read_hits', 'read_misses', 'read_req', 'shard_cpu_system',
             'shard_cpu_system_max', 'total_req', 'total_req_max', 'used_memory', 'write_hits', 'write_misses',
             'write_req', 'bigstore_objs_ram', 'bigstore_objs_flash', 'bigstore_io_reads', 'bigstore_io_writes',
@@ -93,6 +93,7 @@ class RemoteRedisEnterprisePlugin(RemoteBasePlugin):
             dev = bdb_devices.get(db_name)
             dev.absolute('redis_enterprise.endpoints', float(bdb_dict[int(i)].get("endpoints")))
             dev.absolute('redis_enterprise.shard_count', float(bdb_dict[int(i)].get("shards_used")))
+            dev.absolute('redis_enterprise.memory_limit', float(bdb_dict[int(i)].get("limit")))
             total_req = stats[i].get('total_req')
             if total_req is not None:
                 cluster_total_req += float(total_req)
