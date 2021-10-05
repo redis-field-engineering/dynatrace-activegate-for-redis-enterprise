@@ -3,7 +3,7 @@
     "configurationVersions": [
       5
     ],
-    "clusterVersion": "1.226.91.20210918-122217"
+    "clusterVersion": "1.227.111.20211001-093131"
   },
   "id": "15a61e48-1eab-4b32-93d5-d786b02bfac3",
   "dashboardMetadata": {
@@ -12,7 +12,6 @@
     "owner": "christian@redis.com",
     "dynamicFilters": {
       "filters": [
-        "HOST_TAG_KEY:RedisEnterpriseCluster",
         "HOST_TAG_KEY:RedisEnterpriseDatabase"
       ]
     }
@@ -25,7 +24,7 @@
       "bounds": {
         "top": 114,
         "left": 0,
-        "width": 912,
+        "width": 494,
         "height": 266
       },
       "tileFilter": {},
@@ -125,7 +124,7 @@
       "bounds": {
         "top": 0,
         "left": 0,
-        "width": 456,
+        "width": 190,
         "height": 114
       },
       "tileFilter": {},
@@ -189,83 +188,13 @@
       }
     },
     {
-      "name": "Ops/Second",
-      "tileType": "DATA_EXPLORER",
-      "configured": true,
-      "bounds": {
-        "top": 0,
-        "left": 456,
-        "width": 456,
-        "height": 114
-      },
-      "tileFilter": {},
-      "customName": "Single value",
-      "queries": [
-        {
-          "id": "A",
-          "metric": "ext:Redis_Enterprise.redis_enterprise.cluster_total_req",
-          "spaceAggregation": "AVG",
-          "timeAggregation": "DEFAULT",
-          "splitBy": [],
-          "filterBy": {
-            "nestedFilters": [],
-            "criteria": []
-          },
-          "enabled": true
-        }
-      ],
-      "visualConfig": {
-        "type": "SINGLE_VALUE",
-        "global": {
-          "theme": "DEFAULT",
-          "threshold": {
-            "axisTarget": "LEFT",
-            "rules": [
-              {
-                "color": "#7dc540"
-              },
-              {
-                "color": "#f5d30f"
-              },
-              {
-                "color": "#dc172a"
-              }
-            ]
-          },
-          "seriesType": "LINE",
-          "hasTrendline": true
-        },
-        "rules": [],
-        "axes": {
-          "xAxis": {
-            "displayName": "",
-            "visible": true
-          },
-          "yAxes": [
-            {
-              "displayName": "",
-              "visible": true,
-              "min": "AUTO",
-              "max": "AUTO",
-              "position": "LEFT",
-              "queryIds": [
-                "A",
-                ""
-              ],
-              "defaultAxis": true
-            }
-          ]
-        }
-      }
-    },
-    {
       "name": "Latency",
       "tileType": "DATA_EXPLORER",
       "configured": true,
       "bounds": {
-        "top": 380,
-        "left": 0,
-        "width": 912,
+        "top": 114,
+        "left": 494,
+        "width": 494,
         "height": 266
       },
       "tileFilter": {},
@@ -357,9 +286,9 @@
       "tileType": "DATA_EXPLORER",
       "configured": true,
       "bounds": {
-        "top": 646,
+        "top": 380,
         "left": 0,
-        "width": 456,
+        "width": 494,
         "height": 266
       },
       "tileFilter": {},
@@ -438,9 +367,9 @@
       "tileType": "DATA_EXPLORER",
       "configured": true,
       "bounds": {
-        "top": 646,
-        "left": 456,
-        "width": 456,
+        "top": 380,
+        "left": 494,
+        "width": 494,
         "height": 266
       },
       "tileFilter": {},
@@ -506,9 +435,9 @@
       "tileType": "DATA_EXPLORER",
       "configured": true,
       "bounds": {
-        "top": 912,
+        "top": 646,
         "left": 0,
-        "width": 456,
+        "width": 494,
         "height": 266
       },
       "tileFilter": {},
@@ -587,9 +516,9 @@
       "tileType": "DATA_EXPLORER",
       "configured": true,
       "bounds": {
-        "top": 912,
-        "left": 456,
-        "width": 456,
+        "top": 646,
+        "left": 494,
+        "width": 494,
         "height": 266
       },
       "tileFilter": {},
@@ -656,6 +585,286 @@
               "queryIds": [
                 "A",
                 "B"
+              ],
+              "defaultAxis": true
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "Connections",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 0,
+        "left": 418,
+        "width": 190,
+        "height": 114
+      },
+      "tileFilter": {},
+      "customName": "Single value",
+      "queries": [
+        {
+          "id": "A",
+          "metric": "ext:Redis_Enterprise.redis_enterprise.conns",
+          "spaceAggregation": "AVG",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [],
+          "filterBy": {
+            "nestedFilters": [],
+            "criteria": []
+          },
+          "enabled": true
+        }
+      ],
+      "visualConfig": {
+        "type": "SINGLE_VALUE",
+        "global": {
+          "theme": "DEFAULT",
+          "threshold": {
+            "axisTarget": "LEFT",
+            "rules": [
+              {
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "color": "#dc172a"
+              }
+            ]
+          },
+          "seriesType": "LINE",
+          "hasTrendline": true
+        },
+        "rules": [],
+        "axes": {
+          "xAxis": {
+            "displayName": "",
+            "visible": true
+          },
+          "yAxes": [
+            {
+              "displayName": "",
+              "visible": true,
+              "min": "AUTO",
+              "max": "AUTO",
+              "position": "LEFT",
+              "queryIds": [
+                "A",
+                ""
+              ],
+              "defaultAxis": true
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "Used Memory",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 0,
+        "left": 608,
+        "width": 190,
+        "height": 114
+      },
+      "tileFilter": {},
+      "customName": "Single value",
+      "queries": [
+        {
+          "id": "A",
+          "metric": "ext:Redis_Enterprise.redis_enterprise.memory_usage_percent",
+          "spaceAggregation": "AVG",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [],
+          "filterBy": {
+            "nestedFilters": [],
+            "criteria": []
+          },
+          "enabled": true
+        }
+      ],
+      "visualConfig": {
+        "type": "SINGLE_VALUE",
+        "global": {
+          "theme": "DEFAULT",
+          "threshold": {
+            "axisTarget": "LEFT",
+            "rules": [
+              {
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "color": "#dc172a"
+              }
+            ]
+          },
+          "seriesType": "LINE",
+          "hasTrendline": true
+        },
+        "rules": [],
+        "axes": {
+          "xAxis": {
+            "displayName": "",
+            "visible": true
+          },
+          "yAxes": [
+            {
+              "displayName": "",
+              "visible": true,
+              "min": "AUTO",
+              "max": "AUTO",
+              "position": "LEFT",
+              "queryIds": [
+                "A",
+                ""
+              ],
+              "defaultAxis": true
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "Cache Hit Rate",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 0,
+        "left": 798,
+        "width": 190,
+        "height": 114
+      },
+      "tileFilter": {},
+      "customName": "Single value",
+      "queries": [
+        {
+          "id": "A",
+          "metric": "ext:Redis_Enterprise.redis_enterprise.cache_hit_rate",
+          "spaceAggregation": "AVG",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [],
+          "filterBy": {
+            "nestedFilters": [],
+            "criteria": []
+          },
+          "enabled": true
+        }
+      ],
+      "visualConfig": {
+        "type": "SINGLE_VALUE",
+        "global": {
+          "theme": "DEFAULT",
+          "threshold": {
+            "axisTarget": "LEFT",
+            "rules": [
+              {
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "color": "#dc172a"
+              }
+            ]
+          },
+          "seriesType": "LINE",
+          "hasTrendline": true
+        },
+        "rules": [],
+        "axes": {
+          "xAxis": {
+            "displayName": "",
+            "visible": true
+          },
+          "yAxes": [
+            {
+              "displayName": "",
+              "visible": true,
+              "min": "AUTO",
+              "max": "AUTO",
+              "position": "LEFT",
+              "queryIds": [
+                "A",
+                ""
+              ],
+              "defaultAxis": true
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "Ops/Second",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 0,
+        "left": 190,
+        "width": 228,
+        "height": 114
+      },
+      "tileFilter": {},
+      "customName": "Single value",
+      "queries": [
+        {
+          "id": "A",
+          "metric": "ext:Redis_Enterprise.redis_enterprise.total_req",
+          "spaceAggregation": "AVG",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [],
+          "filterBy": {
+            "nestedFilters": [],
+            "criteria": []
+          },
+          "enabled": true
+        }
+      ],
+      "visualConfig": {
+        "type": "SINGLE_VALUE",
+        "global": {
+          "theme": "DEFAULT",
+          "threshold": {
+            "axisTarget": "LEFT",
+            "rules": [
+              {
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "color": "#dc172a"
+              }
+            ]
+          },
+          "seriesType": "LINE",
+          "hasTrendline": true
+        },
+        "rules": [],
+        "axes": {
+          "xAxis": {
+            "displayName": "",
+            "visible": true
+          },
+          "yAxes": [
+            {
+              "displayName": "",
+              "visible": true,
+              "min": "AUTO",
+              "max": "AUTO",
+              "position": "LEFT",
+              "queryIds": [
+                "A",
+                ""
               ],
               "defaultAxis": true
             }

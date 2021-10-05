@@ -94,12 +94,27 @@ class RemoteRedisEnterprisePlugin(RemoteBasePlugin):
             dev.absolute('redis_enterprise.endpoints', float(bdb_dict[int(i)].get("endpoints")))
             dev.absolute('redis_enterprise.shard_count', float(bdb_dict[int(i)].get("shards_used")))
             dev.absolute('redis_enterprise.memory_limit', float(bdb_dict[int(i)].get("limit")))
+
+            # Dynatrace does not support derived stats so we need to calculate two here ourselves
+            # ensure we don't divide by zero here
+            if stats[i]['read_hits'] + stats[i]['read_misses'] + stats[i]['write_hits'] + stats[i]['write_misses'] < 1.0:
+                cache_hit_rate = 0.0
+            else:
+                cache_hit_rate = (
+                    stats[i]['read_hits'] + stats[i]['write_hits']
+                    ) / (
+                        stats[i]['read_hits']+stats[i]['read_misses']+stats[i]['write_hits']+stats[i]['write_misses'])
+
+            dev.absolute("redis_enterprise.cache_hit_rate", cache_hit_rate)
+            dev.absolute("redis_enterprise.memory_usage_percent", float(stats[i]['used_memory'] / bdb_dict[int(i)]['limit']))
+
             total_req = stats[i].get('total_req')
             if total_req is not None:
                 cluster_total_req += float(total_req)
             for j in stats[i].keys():
                 if j in gauges:
                     dev.absolute('redis_enterprise.{}'.format(j), float(stats[i][j]))
+
 
         # send the total as well
         cluster_device.absolute("redis_enterprise.cluster_total_req", cluster_total_req)

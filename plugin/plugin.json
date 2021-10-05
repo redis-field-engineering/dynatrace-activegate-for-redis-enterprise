@@ -1,6 +1,6 @@
 {
     "name": "custom.remote.python.redisenterprise",
-    "version": "0.1.65",
+    "version": "0.2.0",
     "productiveMinVersion": "1.000",
     "requiredAgentVersion": "1.000",
     "type": "python",
@@ -172,6 +172,22 @@
                 "entity": "CUSTOM_DEVICE"
             }
 	},
+        {
+            "timeseries": {
+                "key": "redis_enterprise.memory_usage_percent",
+                "unit": "Percent",
+                "displayname": "Database Memory Usage Percentage",
+                "entity": "CUSTOM_DEVICE"
+            }
+        },
+        {
+            "timeseries": {
+                "key": "redis_enterprise.cache_hit_rate",
+                "unit": "Percent",
+                "displayname": "Cache Hit Rate",
+                "entity": "CUSTOM_DEVICE"
+            }
+        },
         {
             "timeseries": {
                 "key": "redis_enterprise.shard_cpu_system_max",
