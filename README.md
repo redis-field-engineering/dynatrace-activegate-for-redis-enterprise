@@ -96,4 +96,14 @@ There are two example dashboards for<br>
 #### Screenshots
 
 ![Cluster Dashboard](docs/cluster_dashboard.png)
+
 ![Database Dashboard](docs/database_dashboard.png)
+
+To enable filtering on the database dashboard above, you will need to manually tag the device as the current API does not allow us to do this automatically.
+
+Go to Technologies -> ActiveGate RedisEnterprise Clusters -> CLUSTER and add the RedisEnterpriseDatabase tag 
+
+![Tags for Database Dashboard](docs/adding_tags.png)
+
+
+To install the dashboards save the JSON files above and select Import dashboards from the dashboards page.
