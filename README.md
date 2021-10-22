@@ -107,3 +107,8 @@ Go to Technologies -> ActiveGate RedisEnterprise Clusters -> CLUSTER and add the
 
 
 To install the dashboards save the JSON files above and select Import dashboards from the dashboards page.
+
+
+### Monitoring Guide
+
+Included is a example [monitoring guide for Redis Enterprise](docs/RedisEnterpriseSoftwareMonitoringGuide.pdf)
