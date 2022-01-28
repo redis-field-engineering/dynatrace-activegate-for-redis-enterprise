@@ -14,7 +14,6 @@
       - sysstat
       - vim
       - tmux
-      - tree
       - tcpdump
       - unzip
       - libpcre3-dev
@@ -24,14 +23,11 @@
       - cmake
       - automake
       - m4
-      - peg
       - libtool
       - autoconf
       - zlib1g-dev
       - build-essential
       - curl
-      - python3-pip
-      - debian-archive-keyring
       - apt-transport-https
 
   vars_files:
