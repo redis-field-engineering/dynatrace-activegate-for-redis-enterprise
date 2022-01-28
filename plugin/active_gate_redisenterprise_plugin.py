@@ -6,6 +6,10 @@ from enum import Enum
 import requests
 from requests.auth import HTTPBasicAuth
 
+# Since we are often dealing with self signed certs we need to disable warnings
+import urllib3
+urllib3.disable_warnings()
+
 
 logger = logging.getLogger(__name__)
 
@@ -63,7 +67,13 @@ class RemoteRedisEnterprisePlugin(RemoteBasePlugin):
                 'limit': i['memory_size'],
                 'shards_used': shards_used,
                 'endpoints': len(i['endpoints'][-1]['addr']),
+                'crdt': i['crdt'],
             }
+            if i['crdt']:
+                if len([ "yo" for x in i['sync_sources'] if x.get('status') == "in-sync"]) < len(i['sync_sources']):
+                    bdb_dict[i['uid']]['sync_status'] = "0"
+                else:
+                    bdb_dict[i['uid']]['sync_status'] = "1"
         return bdb_dict
 
     def get_bdb_stats(self, cluster_device, bdb_dict, bdb_devices): 
@@ -94,6 +104,8 @@ class RemoteRedisEnterprisePlugin(RemoteBasePlugin):
             dev.absolute('redis_enterprise.endpoints', float(bdb_dict[int(i)].get("endpoints")))
             dev.absolute('redis_enterprise.shard_count', float(bdb_dict[int(i)].get("shards_used")))
             dev.absolute('redis_enterprise.memory_limit', float(bdb_dict[int(i)].get("limit")))
+            if bdb_dict[int(i)].get("crdt"):
+                dev.absolute('redisenterprise.crdt_in_sync', float(bdb_dict[int(i)].get("sync_status")))
 
             # Dynatrace does not support derived stats so we need to calculate two here ourselves
             # ensure we don't divide by zero here

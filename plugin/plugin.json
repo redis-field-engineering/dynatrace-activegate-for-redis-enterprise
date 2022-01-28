@@ -1,6 +1,6 @@
 {
     "name": "custom.remote.python.redisenterprise",
-    "version": "0.2.2",
+    "version": "0.3.1",
     "productiveMinVersion": "1.000",
     "requiredAgentVersion": "1.000",
     "type": "python",
@@ -426,6 +426,70 @@
                 "unit": "Count",
                 "displayname": "Licensed Shards",
                 "aggregation": "min",
+                "entity": "CUSTOM_DEVICE"
+            }
+        },
+        {
+            "timeseries": {
+                "key": "redisenterprise.crdt_egress_bytes",
+                "unit": "Byte",
+                "displayname": "Redis Enterprise Database Peer Bytes Sent",
+                "entity": "CUSTOM_DEVICE"
+            }
+        },
+        {
+            "timeseries": {
+                "key": "redisenterprise.crdt_egress_bytes_decompressed",
+                "unit": "Byte",
+                "displayname": "Redis Enterprise Database Peer Bytes Sent Decompressed",
+                "entity": "CUSTOM_DEVICE"
+            }
+        },
+        {
+            "timeseries": {
+                "key": "redisenterprise.crdt_ingress_bytes",
+                "unit": "Byte",
+                "displayname": "Redis Enterprise Database Peer Bytes Received",
+                "entity": "CUSTOM_DEVICE"
+            }
+        },
+        {
+            "timeseries": {
+                "key": "redisenterprise.crdt_ingress_bytes_decompressed",
+                "unit": "Byte",
+                "displayname": "Redis Enterprise Database Peer Bytes Received Decompressed",
+                "entity": "CUSTOM_DEVICE"
+            }
+        },
+        {
+            "timeseries": {
+                "key": "redisenterprise.crdt_local_lag",
+                "unit": "Second",
+                "displayname": "Redis Enterprise CRDT lag local",
+                "entity": "CUSTOM_DEVICE"
+            }
+        },
+        {
+            "timeseries": {
+                "key": "redisenterprise.crdt_pending_max",
+                "unit": "Count",
+                "displayname": "Redis Enterprise CRDT Pending Max",
+                "entity": "CUSTOM_DEVICE"
+            }
+        },
+        {
+            "timeseries": {
+                "key": "redisenterprise.crdt_in_sync",
+                "unit": "Count",
+                "displayname": "Redis Enterprise CRDT in-sync status",
+                "entity": "CUSTOM_DEVICE"
+            }
+        },
+        {
+            "timeseries": {
+                "key": "redisenterprise.crdt_pending_min",
+                "unit": "Count",
+                "displayname": "Redis Enterprise CRDT Pending Min",
                 "entity": "CUSTOM_DEVICE"
             }
         }
