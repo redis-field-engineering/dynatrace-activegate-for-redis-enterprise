@@ -132,21 +132,25 @@ class RemoteRedisEnterprisePlugin(RemoteBasePlugin):
         cluster_device.absolute("redis_enterprise.cluster_total_req", cluster_total_req)
 
     def get_events(self, device):
-        evnts = self._api_fetch_json(
-            "logs", True,
-            params = {
-                "stime": (datetime.now() - timedelta(seconds=int(self.config.get('relative_interval')))).strftime("%Y-%m-%dT%H:%M:%SZ"),
-                "order": "desc",
-                "limit": 100,
-            }
-        )
-        for evnt in evnts:
-            msg = {k: v for k, v in evnt.items() if k not in ['time', 'severity']}
-            device.report_custom_info_event(
-                title = msg.get('type'),
-                description = msg.get('description'),
-                properties=msg,
+        try:
+            evnts = self._api_fetch_json(
+                "logs", True,
+                params = {
+                    "stime": (datetime.now() - timedelta(seconds=int(self.config.get('relative_interval')))).strftime("%Y-%m-%dT%H:%M:%SZ"),
+                    "order": "desc",
+                    "limit": 100,
+                }
             )
+            for evnt in evnts:
+                msg = {k: v for k, v in evnt.items() if k not in ['time', 'severity']}
+                device.report_custom_info_event(
+                    title = msg.get('type'),
+                    description = msg.get('description'),
+                    properties=msg,
+                )
+        except Exception as e:
+            self.logger.exception('Error: Get Events {}'.format(e))
+
 
     def  get_nodes(self, device):
         stats = self._api_fetch_json(
