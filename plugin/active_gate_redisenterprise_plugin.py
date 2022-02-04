@@ -76,6 +76,36 @@ class RemoteRedisEnterprisePlugin(RemoteBasePlugin):
                     bdb_dict[i['uid']]['sync_status'] = "1"
         return bdb_dict
 
+    def get_crdt_stats(self, bdb_dict, bdb_devices): 
+        """ Collect Active/Active stats if it's enabled """
+        # We need to rename the stats so they don't conflict bdb level stats
+        crdt_stats = {
+            "egress_bytes": "crdt_egress_bytes",
+            "egress_bytes_decompressed": "crdt_egress_bytes_decompressed",
+            "ingress_bytes": "crdt_ingress_bytes",
+            "ingress_bytes_decompressed": "crdt_ingress_bytes_decompressed",
+            "local_ingress_lag_time": "crdt_local_lag",
+            "pending_local_writes_max": "crdt_pending_max",
+            "pending_local_writes_min": "crdt_pending_min",
+        }
+        for i in bdb_dict.keys():
+            if bdb_dict[int(i)].get("crdt"):
+                db_name = bdb_dict[int(i)].get("name")
+                dev = bdb_devices.get(db_name)
+                peer_stats = self._api_fetch_json(
+                    'bdbs/{}/peer_stats'.format(i),
+                    True,
+                    params = {
+                            "stime": (datetime.now() - timedelta(seconds=int(self.config.get('relative_interval')))).strftime("%Y-%m-%dT%H:%M:%SZ"),
+                            "interval": "10sec",
+                            }
+                )
+                if len(peer_stats) > 0:
+                    stats = peer_stats["peer_stats"][0]["intervals"][0]
+                    for s in crdt_stats.keys():
+                        dev.absolute('redisenterprise.{}'.format(crdt_stats[s]), float(stats[s]))
+
+
     def get_bdb_stats(self, cluster_device, bdb_dict, bdb_devices): 
         """ Collect Enterprise database related stats """
         gauges = [
@@ -132,6 +162,7 @@ class RemoteRedisEnterprisePlugin(RemoteBasePlugin):
         cluster_device.absolute("redis_enterprise.cluster_total_req", cluster_total_req)
 
     def get_events(self, device):
+        """ Collect log/event items so they can be propigated to the service """
         try:
             evnts = self._api_fetch_json(
                 "logs", True,
@@ -142,10 +173,12 @@ class RemoteRedisEnterprisePlugin(RemoteBasePlugin):
                 }
             )
             for evnt in evnts:
-                msg = {k: v for k, v in evnt.items() if k not in ['time', 'severity']}
+                # the report_custom_info_event function keeps hoarking on anything with an int etc
+                # so it's imporant to str every value coming back or it will throw an exception
+                msg = {k: str(v) for k, v in evnt.items() if k not in ['time', 'severity']}
                 device.report_custom_info_event(
-                    title = msg.get('type'),
-                    description = msg.get('description'),
+                    title = msg.get('type', 'Unknown'),
+                    description = msg.get('description', 'No description'),
                     properties=msg,
                 )
         except Exception as e:
@@ -153,6 +186,7 @@ class RemoteRedisEnterprisePlugin(RemoteBasePlugin):
 
 
     def  get_nodes(self, device):
+        """ Collect node level information - note: we never display single node, just the aggregate """
         stats = self._api_fetch_json(
             "nodes",
             True,
@@ -169,6 +203,7 @@ class RemoteRedisEnterprisePlugin(RemoteBasePlugin):
 
 
     def _api_fetch_json(self, endpoint, allow_redirect, params=None):
+        """ Helper to get various information from the Redis Enterprise API """
         headers_sent = {'Content-Type': 'application/json'}
         url = '{}/v1/{}'.format(self.url, endpoint)
         auth=HTTPBasicAuth(self.user, self.password)
@@ -210,5 +245,6 @@ class RemoteRedisEnterprisePlugin(RemoteBasePlugin):
         device.absolute("redis_enterprise.shards_used", used_shards_total)
 
         self.get_bdb_stats(device, bdbs, bdb_devices)
+        self.get_crdt_stats(bdbs, bdb_devices)
         self.get_events(device)
         self.get_nodes(device)

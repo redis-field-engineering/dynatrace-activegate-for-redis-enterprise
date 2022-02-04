@@ -1,6 +1,6 @@
 {
     "name": "custom.remote.python.redisenterprise",
-    "version": "0.3.2",
+    "version": "0.3.17",
     "productiveMinVersion": "1.000",
     "requiredAgentVersion": "1.000",
     "type": "python",
@@ -433,7 +433,7 @@
             "timeseries": {
                 "key": "redisenterprise.crdt_egress_bytes",
                 "unit": "Byte",
-                "displayname": "Redis Enterprise Database Peer Bytes Sent",
+                "displayname": "Redis Enterprise Database CRDT Peer Bytes Sent",
                 "entity": "CUSTOM_DEVICE"
             }
         },
@@ -441,7 +441,7 @@
             "timeseries": {
                 "key": "redisenterprise.crdt_egress_bytes_decompressed",
                 "unit": "Byte",
-                "displayname": "Redis Enterprise Database Peer Bytes Sent Decompressed",
+                "displayname": "Redis Enterprise Database CRDT Peer Bytes Sent Decompressed",
                 "entity": "CUSTOM_DEVICE"
             }
         },
@@ -449,7 +449,7 @@
             "timeseries": {
                 "key": "redisenterprise.crdt_ingress_bytes",
                 "unit": "Byte",
-                "displayname": "Redis Enterprise Database Peer Bytes Received",
+                "displayname": "Redis Enterprise Database CRDT Peer Bytes Received",
                 "entity": "CUSTOM_DEVICE"
             }
         },
@@ -457,7 +457,7 @@
             "timeseries": {
                 "key": "redisenterprise.crdt_ingress_bytes_decompressed",
                 "unit": "Byte",
-                "displayname": "Redis Enterprise Database Peer Bytes Received Decompressed",
+                "displayname": "Redis Enterprise Database CRDT Peer Bytes Received Decompressed",
                 "entity": "CUSTOM_DEVICE"
             }
         },
