@@ -87,10 +87,11 @@ The cluster level information is the FQDN of the cluster and the database level 
 
 ### Enhanced Dashboards
 
-There are two example dashboards for<br>
+There are three example dashboards for<br>
 
-- [Cluster Statistics](./Redis_Enterprise_Overview.json)
-- [Database Statistics](./Redis_Enterprise_Database.json)
+- [Cluster Statistics](dashboards/Redis_Enterprise_Overview.json)
+- [Database Statistics](dashboards/Redis_Enterprise_Database.json)
+- [Active Active Statistics](dashboards/Redis_Enterprise_Database_Active_Active.json)
 
 
 #### Screenshots
@@ -98,6 +99,8 @@ There are two example dashboards for<br>
 ![Cluster Dashboard](docs/cluster_dashboard.png)
 
 ![Database Dashboard](docs/database_dashboard.png)
+
+![Active/Active Dashboard](docs/active_active_dashboard.png)
 
 To enable filtering on the database dashboard above, you will need to manually tag the device as the current API does not allow us to do this automatically.
 
