@@ -204,7 +204,10 @@ class RemoteRedisEnterprisePlugin(RemoteBasePlugin):
 
     def _api_fetch_json(self, endpoint, allow_redirect, params=None):
         """ Helper to get various information from the Redis Enterprise API """
-        headers_sent = {'Content-Type': 'application/json'}
+        headers_sent = {
+            'Content-Type': 'application/json',
+            'User-Agent': 'DynatraceActiveGate/RedisEnterprisePlugin',
+            }
         url = '{}/v1/{}'.format(self.url, endpoint)
         auth=HTTPBasicAuth(self.user, self.password)
         r = requests.get(
