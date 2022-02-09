@@ -286,7 +286,11 @@ class RemoteRedisEnterprisePlugin(RemoteBasePlugin):
             params=params,
         )
         if r.status_code == 307:
-            raise Exception('{} is not the cluster leader node. No metrics or event will be collected'.format(self.url))
+            raise Exception(
+                "{} is not the cluster leader node. No metrics or event will be collected".format(
+                    self.url
+                )
+            )
         if r.status_code != 200:
             self.logger.exception(
                 "HTTPS Fech Error: {} returns a {} status: {}".format(
