@@ -285,6 +285,8 @@ class RemoteRedisEnterprisePlugin(RemoteBasePlugin):
             verify=False,
             params=params,
         )
+        if r.status_code == 307:
+            raise Exception('{} is not the cluster leader node. No metrics or event will be collected'.format(self.url))
         if r.status_code != 200:
             self.logger.exception(
                 "HTTPS Fech Error: {} returns a {} status: {}".format(
@@ -302,24 +304,27 @@ class RemoteRedisEnterprisePlugin(RemoteBasePlugin):
             identifier="RedisEnterprise",
             group_name="ActiveGate RedisEnterprise Clusters",
         )
-        cluster_name = self.get_cluster_name()
-        device = group.create_device(cluster_name, cluster_name)
-        re_license, re_shards = self.get_license()
-        bdbs = self.get_bdb_dict()
-        bdb_devices = {}
-        used_shards_total = 0
-        for i in bdbs:
-            used_shards_total += int(bdbs[i]["shards_used"])
-            bdb_devices[bdbs[i]["name"]] = group.create_device(
-                "{}:{}".format(cluster_name, bdbs[i]["name"]),
-                "{}:{}".format(cluster_name, bdbs[i]["name"]),
-            )
+        try:
+            cluster_name = self.get_cluster_name()
+            device = group.create_device(cluster_name, cluster_name)
+            re_license, re_shards = self.get_license()
+            bdbs = self.get_bdb_dict()
+            bdb_devices = {}
+            used_shards_total = 0
+            for i in bdbs:
+                used_shards_total += int(bdbs[i]["shards_used"])
+                bdb_devices[bdbs[i]["name"]] = group.create_device(
+                    "{}:{}".format(cluster_name, bdbs[i]["name"]),
+                    "{}:{}".format(cluster_name, bdbs[i]["name"]),
+                )
 
-        device.absolute("redis_enterprise.license_days", max(re_license, 0))
-        device.absolute("redis_enterprise.license_shards", re_shards)
-        device.absolute("redis_enterprise.shards_used", used_shards_total)
+            device.absolute("redis_enterprise.license_days", max(re_license, 0))
+            device.absolute("redis_enterprise.license_shards", re_shards)
+            device.absolute("redis_enterprise.shards_used", used_shards_total)
 
-        self.get_bdb_stats(device, bdbs, bdb_devices)
-        self.get_crdt_stats(bdbs, bdb_devices)
-        self.get_events(device)
-        self.get_nodes(device)
+            self.get_bdb_stats(device, bdbs, bdb_devices)
+            self.get_crdt_stats(bdbs, bdb_devices)
+            self.get_events(device)
+            self.get_nodes(device)
+        except Exception as inst:
+            self.logger.info("Data Collection Error: {}".format(inst))
