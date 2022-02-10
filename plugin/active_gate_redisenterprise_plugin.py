@@ -15,6 +15,25 @@ urllib3.disable_warnings()
 logger = logging.getLogger(__name__)
 
 
+class ClusterException(Exception):
+    """Custom Exception for when Authentication fails"""
+
+    def __init__(self, endpoint, username, message="Failure to fetch data"):
+        self.endpoint = endpoint
+        self.username = username
+        self.message = message
+        super().__init__(self.message)
+
+
+class NotClusterLeader(Exception):
+    """Custom Exception for when the node queried is not the cluster leader"""
+
+    def __init__(self, endpoint, message="Endpoint is not the cluster leader"):
+        self.endpoint = endpoint
+        self.message = message
+        super().__init__(self.message)
+
+
 class RemoteRedisEnterprisePlugin(RemoteBasePlugin):
     class State(Enum):
         DOWNTIME = 0
@@ -286,16 +305,14 @@ class RemoteRedisEnterprisePlugin(RemoteBasePlugin):
             params=params,
         )
         if r.status_code == 307:
-            raise Exception(
-                "{} is not the cluster leader node. No metrics or event will be collected".format(
-                    self.url
-                )
-            )
+            raise NotClusterLeader(self.url)
         if r.status_code != 200:
-            self.logger.exception(
-                "HTTPS Fech Error: {} returns a {} status: {}".format(
-                    url, r.status_code, r.content
-                )
+            raise ClusterException(
+                url,
+                self.user,
+                message="Endpoint status: {} : {}".format(
+                    r.status_code, r.content.decode("utf-8")
+                ),
             )
 
         return r.json()
@@ -330,5 +347,11 @@ class RemoteRedisEnterprisePlugin(RemoteBasePlugin):
             self.get_crdt_stats(bdbs, bdb_devices)
             self.get_events(device)
             self.get_nodes(device)
+        except NotClusterLeader as e:
+            self.logger.info("{}: {}".format(e.message, e.endpoint))
+        except ClusterException as e:
+            self.logger.error("{} {} {}".format(e.endpoint, e.username, e.message))
+            raise Exception("{} {} {}".format(e.endpoint, e.username, e.message))
         except Exception as inst:
-            self.logger.info("Data Collection Error: {}".format(inst))
+            self.logger.exception("Data Collection Error: {}".format(inst))
+            raise Exception("Data Collection Error: {}".format(inst))
