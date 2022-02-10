@@ -114,4 +114,9 @@ To install the dashboards save the JSON files above and select Import dashboards
 
 ### Monitoring Guide
 
-Included is a example [monitoring guide for Redis Enterprise](docs/RedisEnterpriseSoftwareMonitoringGuide.pdf)
+Included is a example [monitoring guide for Redis Enterprise](docs/RedisEnterpriseSoftwareMonitoringGuide.pdf).  It includes suggestions for KPIs to monitor and offers a sample runbook. 
+
+
+### Troubleshooting Guide
+
+[Plugin Troubleshooting Guide](docs/TroubleShootingGuide.md) provides tips and tricks to troubleshoot your installation.
