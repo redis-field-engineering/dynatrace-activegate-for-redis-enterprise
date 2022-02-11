@@ -5,3 +5,4 @@ ansible/files/*.whl
 *.log
 devnote*.md
 plugin/.venv/*
+plugin/custom.remote.python.redisenterprise.zip
