@@ -128,10 +128,20 @@ class RemoteRedisEnterprisePlugin(RemoteBasePlugin):
                     },
                 )
                 if len(peer_stats) > 0:
-                    stats = peer_stats["peer_stats"][0]["intervals"][0]
-                    for s in crdt_stats.keys():
-                        dev.absolute(
-                            "redisenterprise.{}".format(crdt_stats[s]), float(stats[s])
+                    try:
+                        stats = peer_stats["peer_stats"][0]["intervals"][0]
+                        for s in crdt_stats.keys():
+                            dev.absolute(
+                                "redisenterprise.{}".format(crdt_stats[s]),
+                                float(stats.get(s, 0.0)),
+                            )
+                    except IndexError:
+                        pass
+                    except Exception as e:
+                        raise ClusterException(
+                            self.url,
+                            self.user,
+                            "Failed to fetch CRDT stats: {}".format(e),
                         )
 
     def get_bdb_stats(self, cluster_device, bdb_dict, bdb_devices):

@@ -1,6 +1,6 @@
 {
     "name": "custom.remote.python.redisenterprise",
-    "version": "0.4.10",
+    "version": "0.4.51",
     "productiveMinVersion": "1.000",
     "requiredAgentVersion": "1.000",
     "type": "python",
