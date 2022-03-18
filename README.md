@@ -1,5 +1,7 @@
 ## Redis Enterprise ActiveGate Extension
 
+![logo](docs/redis-e-logo-small.png)
+
 ### Prerequisites
 
 1. Working [Dynatrace Install](https://www.dynatrace.com/support/help/setup-and-configuration/)
