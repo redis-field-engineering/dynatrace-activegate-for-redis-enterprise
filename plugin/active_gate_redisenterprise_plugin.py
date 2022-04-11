@@ -289,7 +289,9 @@ class RemoteRedisEnterprisePlugin(RemoteBasePlugin):
             "total_node_count": 0,
             "total_active_nodes": 0,
         }
+        re_version = "0.0.0"
         for i in stats:
+            re_version = i.get("software_version")
             res["total_node_cores"] += i["cores"]
             res["total_node_memory"] += i["total_memory"]
             res["total_node_count"] += 1
@@ -297,6 +299,9 @@ class RemoteRedisEnterprisePlugin(RemoteBasePlugin):
                 res["total_active_nodes"] += 1
         for x in res.keys():
             device.absolute("redis_enterprise.{}".format(x), float(res[x]))
+
+        # Add the version so it appears in the UI
+        device.report_property(key='redis_enterprise_version', value=re_version)
 
     def _api_fetch_json(self, endpoint, allow_redirect, params=None):
         """Helper to get various information from the Redis Enterprise API"""
