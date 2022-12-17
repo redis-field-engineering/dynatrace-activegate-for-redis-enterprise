@@ -233,9 +233,11 @@ class RemoteRedisEnterprisePlugin(RemoteBasePlugin):
                 )
 
             dev.absolute("redis_enterprise.cache_hit_rate", cache_hit_rate)
+            
+            # Multiply by 100 for a readable percentage
             dev.absolute(
                 "redis_enterprise.memory_usage_percent",
-                float(stats[i]["used_memory"] / bdb_dict[int(i)]["limit"]),
+                float(stats[i]["used_memory"] / bdb_dict[int(i)]["limit"] * 100),
             )
 
             total_req = stats[i].get("total_req")
