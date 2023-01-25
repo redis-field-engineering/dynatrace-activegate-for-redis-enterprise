@@ -2,7 +2,7 @@
 
 The Dynatrace ActiveGate extension for Redis Enterprise collects metrics from your [Redis Enterprise Software](https://docs.redis.com/latest/rs/) cluster using the [Dynatrace ActiveGate](https://www.dynatrace.com/support/help/setup-and-configuration/dynatrace-activegate) secure proxy.
 
-You can then view these metrics and monitor your cluster from the [Dynatrace UI](https://www.dynatrace.com/support/help/how-to-use-dynatrace/dashboards-and-charts#expand--browse-and-display-dashboards--4).
+Once the extension is installed, you can view these metrics and monitor your cluster from the [Dynatrace UI](https://www.dynatrace.com/support/help/how-to-use-dynatrace/dashboards-and-charts#expand--browse-and-display-dashboards--4).
 
 ## Table of Contents
 
@@ -33,7 +33,7 @@ You'll also need to ensure that the server running your ActiveGate instance can 
 
 To install the Dynatrace ActiveGate extension for Redis Enterprise, you'll need to:
 
-1. Create a read-only Redis Enterprise user account with `cluster view` permissions. This accout will be used by the Dynatrace extension to access Redis Enterprise cluster metrics.
+1. Create a read-only Redis Enterprise user account with `cluster view` permissions. This account will be used by the Dynatrace extension to access Redis Enterprise cluster metrics.
 1. Install the Redis Enterprise ActiveGate extension on your ActiveGate node.
 1. Configure and enable the extension from the Dynatrace UI.
 
@@ -43,7 +43,7 @@ These steps are described in more detail below.
 
 To create a new read-only user, first log in to the Redis Enterprise management console.
 
-1. Follow the procedure for [adding a new user](https://docs.redis.com/latest/rs/security/access-control/manage-users/add-users/).
+1. Follow the procedure for [adding a new user](https://docs.redis.com/latest/rs/security/access-control/manage-users/add-users/) to your Redis Enterprise cluster.
 1. When selecting the new user's role, be sure to choose *Cluster viewer*.
 1. For *Authentication*, select *Internal*.
 1. Give the user a descriptive name (e.g., `dynatrace-agent@example.com`).
@@ -55,7 +55,7 @@ To install the extension:
 
 1. Download the [latest release](https://github.com/redis-field-engineering/dynatrace-activegate-for-redis-enterprise/releases) of the extension. The release is provided as a zip file named `custom.remote.python.redisenterprise-{VERSION}.zip`.
 
-1. Copy the extension to the server running your Dynatrace ActiveGate instance.
+1. Upload the extension to the server running your Dynatrace ActiveGate instance.
 
 1. On the the same server, copy the extension to `/opt/dynatrace/remotepluginmodule/plugin_deployment/`.
 
@@ -81,13 +81,13 @@ Once you've uploaded the extension, the extension will be listed under your moni
 
 Fill in the values as follows:
 
-1. Endpoint name: Any name you'd like to use to identify this endpoint.
-1. User: The username for the Redis Enterprise read-only user account.
-1. Password: The password for the Redis Enterprise read-only user account.
-1. State change interval: The frequency at which metrics change on the cluster, in seconds (default: 60).
-1. URL: The URL for the Redis Enterprise REST API endpoint. Include the port (e.g., http://cache.cluster.redis.com:9443)
-1. Event interval: The frequency at which events are logged, in seconds (default: 240).
-1. Relative interval: The frequency at which relative metrics are logged, in seconds (default: 60).
+1. **Endpoint name**: Any name you'd like to use to identify this endpoint.
+1. **User**: The username for the Redis Enterprise read-only user account.
+1. **Password**: The password for the Redis Enterprise read-only user account.
+1. **State change interval**: The frequency at which metrics change on the cluster, in seconds (default: 60).
+1. **URL**: The URL for the Redis Enterprise REST API endpoint. Include the port (e.g., http://cache.cluster.redis.com:9443)
+1. **Event interval**: The frequency at which events are logged, in seconds (default: 240).
+1. **Relative interval**: The frequency at which relative metrics are logged, in seconds (default: 60).
 
 Now, click *Add endpoint*. Then verify that the endpoint's status is *Ok*:
 
@@ -105,7 +105,7 @@ Then select REDIS_ENTERPRISE:
 
 ![Device list](docs/devices.png)
 
-And select the *Active Gate RedisEnterprise Clusters*. You can view cluster metrics under the FQDN (fully-qualified domain name) of the cluster:
+Select the *Active Gate RedisEnterprise Clusters*. You can view cluster metrics under the FQDN (fully-qualified domain name) of the cluster:
 
 ![Cluster metrics](docs/cluster_stats.png)
 
@@ -125,7 +125,7 @@ This repository includes three sample dashboards for cluster, database, and acti
 * [Database metrics dashaboard](dashboards/Redis_Enterprise_Database.json)
 * [Active Active metrics dashboard](dashboards/Redis_Enterprise_Database_Active_Active.json)
 
-To get started more quickly, you can import these dashboard configuration into the Dynatrace management console. The above dashboard will look like this:
+To get started more quickly, you can import these dashboard configurations into the Dynatrace management console. The above dashboard will look like this:
 
 ![Cluster Dashboard](docs/cluster_dashboard.png)
 
@@ -135,7 +135,7 @@ To get started more quickly, you can import these dashboard configuration into t
 
 To enable filtering on the database dashboards above, you will need to manually tag the device because the current API does not allow us to do this automatically.
 
-Go to Technologies -> ActiveGate RedisEnterprise Clusters -> CLUSTER and add the RedisEnterpriseDatabase tag.
+Go to Technologies -> ActiveGate RedisEnterprise Clusters -> CLUSTER. Then add the RedisEnterpriseDatabase tag.
 
 ![Tags for Database Dashboard](docs/adding_tags.png)
 
