@@ -2,7 +2,7 @@
 
 The plugin collects data from the [Redis Enterprise API](https://storage.googleapis.com/rlecrestapi/rest-html/http_rest_api.html) and submits that data to Dynatrace via Active Gate
 
-All commands below us the redis.cluster.fqdn as the Redis Enterprise cluster fully qualified domain name and all commands should be run on the Active Gate node.
+All commands below use the redis.cluster.fqdn as the Redis Enterprise cluster fully qualified domain name and all commands should be run on the Active Gate node.
 
 ### Check Cluster DNS Resolution
 
